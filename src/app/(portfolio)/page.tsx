@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faApple } from "@fortawesome/free-brands-svg-icons";
 
 export default function Home() {
   return (
@@ -32,6 +34,7 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
+            <FontAwesomeIcon icon={faApple} />
             <Image
               className="dark:invert"
               src="/vercel.svg"
