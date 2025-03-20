@@ -23,6 +23,9 @@
       "@payload-config": [
         "./src/payload.config.ts"
       ],
+      "@global-styles": [
+        "./src/app/global.css"
+      ],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
