@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faApple } from "@fortawesome/free-brands-svg-icons";
+import { LangSelect } from "@/components/molocules/LangSelect/LangSelect";
 
 export default function Home() {
   return (
@@ -26,6 +27,8 @@ export default function Home() {
             Save and see your changes instantly.
           </li>
         </ol>
+
+        <LangSelect />
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <a
