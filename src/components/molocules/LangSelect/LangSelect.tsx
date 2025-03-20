@@ -25,7 +25,7 @@ export function LangSelect() {
         onClick={() => setSelectedLang("SE")}
         className={` transition-all duration-300 cursor-pointer 
                 ${isHovered || selectedLang === "SE" ? "opacity-100" : "opacity-0"} 
-                ${!isHovered ? "translate-x-[calc(-100%+--spacing(1))]" : "translate-x-0"}
+                ${!isHovered ? "translate-x-[calc(-100%---spacing(2))]" : "translate-x-0"}
                 ${selectedLang === "SE" ? "font-bold" : ""}`}
       >
         SE
@@ -34,7 +34,7 @@ export function LangSelect() {
         onClick={() => setSelectedLang("HU")}
         className={` transition-all duration-300 cursor-pointer
                 ${isHovered || selectedLang === "HU" ? "opacity-100" : "opacity-0"}
-                ${!isHovered ? "translate-x-[calc(-200%---spacing(1))]" : "translate-x-0"}
+                ${!isHovered ? "translate-x-[calc(-200%---spacing(2))]" : "translate-x-0"}
                 ${selectedLang === "HU" ? "font-bold" : ""}`}
       >
         HU
