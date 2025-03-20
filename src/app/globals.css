@@ -18,6 +18,9 @@
     --foreground: #ededed; */
   }
 }
+html {
+  height: 100%;
+}
 
 body {
   /* background: var(--background);
