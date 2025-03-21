@@ -26,7 +26,8 @@ export function LangSelect() {
         className={` transition-all duration-300 cursor-pointer 
                 ${isHovered || selectedLang === "SE" ? "opacity-100" : "opacity-0"} 
                 ${!isHovered ? "translate-x-[calc(-100%---spacing(2))]" : "translate-x-0"}
-                ${selectedLang === "SE" ? "font-bold" : ""}`}
+                ${selectedLang === "SE" ? "font-bold" : ""}
+                `}
       >
         SE
       </li>
@@ -35,7 +36,8 @@ export function LangSelect() {
         className={` transition-all duration-300 cursor-pointer
                 ${isHovered || selectedLang === "HU" ? "opacity-100" : "opacity-0"}
                 ${!isHovered ? "translate-x-[calc(-200%---spacing(2))]" : "translate-x-0"}
-                ${selectedLang === "HU" ? "font-bold" : ""}`}
+                ${selectedLang === "HU" ? "font-bold" : ""}
+                `}
       >
         HU
       </li>

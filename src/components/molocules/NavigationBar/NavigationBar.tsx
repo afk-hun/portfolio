@@ -8,6 +8,9 @@ import {
 import Link from "next/link";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { LangSelect } from "../LangSelect/LangSelect";
+import AFK_LOGO from "../../../../public/images/afk-logo.svg";
+import Image from "next/image";
+import { useState } from "react";
 
 type SocialMedia = {
   icon: "linkedin" | "github" | "youtube" | "instagram" | IconProp;
@@ -15,6 +18,7 @@ type SocialMedia = {
 };
 
 type Project = {
+  id: string;
   name: string;
   url: string;
 };
@@ -25,6 +29,8 @@ interface NavigationBarProps {
 }
 
 export function NavigationBar({ projects, socialMedia }: NavigationBarProps) {
+  const [selectedMenu, setSelectedMenu] = useState("portfolio");
+
   const mediaIcons: SocialMedia[] = socialMedia
     .map((social) => {
       switch (social.icon) {
@@ -55,25 +61,59 @@ export function NavigationBar({ projects, socialMedia }: NavigationBarProps) {
     .filter((social): social is SocialMedia => social !== undefined);
 
   return (
-    <nav className="flex flex-col h-full justify-between">
-      <span className="px-1 py-2">Logo</span>
+    <nav className="flex flex-col h-full justify-between ">
+      <Link href={"/"} className="px-1 py-2">
+        <Image
+          className="w-[100px] h-auto"
+          src={AFK_LOGO}
+          width={100}
+          height={50}
+          alt="AFK Logo"
+          priority
+        />
+      </Link>
       <ul className="flex flex-col gap-2 px-1 py-2">
-        <li>
+        <li
+          id="portfolio"
+          className={`
+            ${selectedMenu === "portfolio" ? "font-bold" : ""}
+            hover:font-bold
+            transition-all duration-300
+          `}
+          onClick={() => setSelectedMenu("portfolio")}
+        >
           <Link href="/">Portfolio</Link>
         </li>
         <li>
-          <Link href="/">Projects</Link>
+          Projects
           <ul className="flex flex-col gap-1 pl-4">
             {projects.map((project) => {
               return (
-                <li key={project.url}>
+                <li
+                  id={project.id}
+                  key={project.id}
+                  className={`
+                    ${selectedMenu === project.id ? "font-bold" : ""}
+                    hover:font-bold
+                    transition-all duration-300
+                  `}
+                  onClick={() => setSelectedMenu(project.id)}
+                >
                   <Link href={`/projects/${project.url}`}>{project.name}</Link>
                 </li>
               );
             })}
           </ul>
         </li>
-        <li>
+        <li
+          id="about"
+          className={`
+          ${selectedMenu === "about" ? "font-bold" : ""}
+          hover:font-bold
+          transition-all duration-300
+        `}
+          onClick={() => setSelectedMenu("about")}
+        >
           <Link href="/about">About</Link>
         </li>
       </ul>
