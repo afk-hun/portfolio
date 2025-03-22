@@ -11,6 +11,7 @@ import { LangSelect } from "../LangSelect/LangSelect";
 import AFK_LOGO from "../../../../public/images/afk-logo.svg";
 import Image from "next/image";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 type SocialMedia = {
   icon: "linkedin" | "github" | "youtube" | "instagram" | IconProp;
@@ -26,10 +27,16 @@ type Project = {
 interface NavigationBarProps {
   projects: Project[];
   socialMedia: SocialMedia[];
+  onLangSelect: (lang: string) => void;
 }
 
-export function NavigationBar({ projects, socialMedia }: NavigationBarProps) {
+export function NavigationBar({
+  projects,
+  socialMedia,
+  onLangSelect,
+}: NavigationBarProps) {
   const [selectedMenu, setSelectedMenu] = useState("portfolio");
+  const t = useTranslations("navbar");
 
   const mediaIcons: SocialMedia[] = socialMedia
     .map((social) => {
@@ -60,6 +67,10 @@ export function NavigationBar({ projects, socialMedia }: NavigationBarProps) {
     })
     .filter((social): social is SocialMedia => social !== undefined);
 
+  function selectedLangHandler(lang: string): void {
+    onLangSelect(lang);
+  }
+
   return (
     <nav className="flex flex-col h-full justify-between ">
       <Link href={"/"} className="px-1 py-2">
@@ -82,10 +93,10 @@ export function NavigationBar({ projects, socialMedia }: NavigationBarProps) {
           `}
           onClick={() => setSelectedMenu("portfolio")}
         >
-          <Link href="/">Portfolio</Link>
+          <Link href="/">{t("portfolio")}</Link>
         </li>
         <li>
-          Projects
+          {t("projects")}
           <ul className="flex flex-col gap-1 pl-4">
             {projects.map((project) => {
               return (
@@ -114,11 +125,11 @@ export function NavigationBar({ projects, socialMedia }: NavigationBarProps) {
         `}
           onClick={() => setSelectedMenu("about")}
         >
-          <Link href="/about">About</Link>
+          <Link href="/about">{t("about")}</Link>
         </li>
       </ul>
       <div className="flex flex-col gap-2">
-        <LangSelect />
+        <LangSelect onLangSelect={selectedLangHandler} />
         <div className="flex gap-2 px-1 py-2">
           {mediaIcons.map((social) => {
             return (
