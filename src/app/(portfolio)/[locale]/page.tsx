@@ -28,7 +28,7 @@ export default function Home() {
           </li>
         </ol>
 
-        <LangSelect />
+        <LangSelect onLangSelect={() => {}} />
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <a

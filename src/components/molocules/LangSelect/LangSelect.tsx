@@ -1,9 +1,20 @@
 "use client";
 import { useState } from "react";
+import type { MouseEvent } from "react";
 
-export function LangSelect() {
-  const [selectedLang, setSelectedLang] = useState("EN");
+interface LangSelectProps {
+  onLangSelect: (lang: string) => void;
+}
+
+export function LangSelect({ onLangSelect }: LangSelectProps) {
+  const [selectedLang, setSelectedLang] = useState("en");
   const [isHovered, setIsHovered] = useState(false);
+
+  function langSelectHandler(event: MouseEvent<HTMLLIElement>): void {
+    const lang = event.currentTarget.textContent?.toLocaleLowerCase() || "en";
+    setSelectedLang(lang);
+    onLangSelect(lang);
+  }
 
   return (
     <ul
@@ -12,31 +23,31 @@ export function LangSelect() {
       onMouseLeave={() => setIsHovered(false)}
     >
       <li
-        onClick={() => setSelectedLang("EN")}
+        onClick={langSelectHandler}
         className={` transition-all duration-300 cursor-pointer 
-                ${isHovered || selectedLang === "EN" ? "opacity-100" : "opacity-0"} 
-                ${selectedLang === "EN" ? "font-bold" : ""}
+                ${isHovered || selectedLang === "en" ? "opacity-100" : "opacity-0"} 
+                ${selectedLang === "en" ? "font-bold" : ""}
                 `}
         // ${!isHovered ? "translate-x-[calc(100%+--spacing(1))]" : "translate-x-0"}
       >
         EN
       </li>
       <li
-        onClick={() => setSelectedLang("SE")}
+        onClick={langSelectHandler}
         className={` transition-all duration-300 cursor-pointer 
-                ${isHovered || selectedLang === "SE" ? "opacity-100" : "opacity-0"} 
+                ${isHovered || selectedLang === "se" ? "opacity-100" : "opacity-0"} 
                 ${!isHovered ? "translate-x-[calc(-100%---spacing(2))]" : "translate-x-0"}
-                ${selectedLang === "SE" ? "font-bold" : ""}
+                ${selectedLang === "se" ? "font-bold" : ""}
                 `}
       >
         SE
       </li>
       <li
-        onClick={() => setSelectedLang("HU")}
+        onClick={langSelectHandler}
         className={` transition-all duration-300 cursor-pointer
-                ${isHovered || selectedLang === "HU" ? "opacity-100" : "opacity-0"}
+                ${isHovered || selectedLang === "hu" ? "opacity-100" : "opacity-0"}
                 ${!isHovered ? "translate-x-[calc(-200%---spacing(2))]" : "translate-x-0"}
-                ${selectedLang === "HU" ? "font-bold" : ""}
+                ${selectedLang === "hu" ? "font-bold" : ""}
                 `}
       >
         HU
