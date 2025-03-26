@@ -14,6 +14,9 @@ const nextConfig: NextConfig = {
   experimental: {
     reactCompiler: false,
   },
+  images: {
+    domains: ["picsum.photos"],
+  },
 };
 
 const withNextIntl = createNextIntlPlugin();
