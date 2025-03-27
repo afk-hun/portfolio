@@ -5,8 +5,10 @@ import {
   faChevronRight,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
+import { Ref } from "react";
 
 interface ImageModalProps {
+  ref?: Ref<HTMLDivElement>;
   src: string;
   alt: string;
   hasMany: boolean;
@@ -16,6 +18,7 @@ interface ImageModalProps {
 }
 
 export function ImageModal({
+  ref,
   src,
   alt,
   hasMany,
@@ -23,8 +26,14 @@ export function ImageModal({
   onRightClick,
   onClose,
 }: ImageModalProps) {
+  // ${
+  //     show
+  //       ? "opacity-100 transition-opacity duration-500"
+  //       : " opacity-0 transition-opacity duration-500"
+  //   }
   return (
     <div
+      ref={ref}
       className={`
 			fixed
 			top-0
@@ -37,8 +46,8 @@ export function ImageModal({
       <div
         className={`
 		fixed
-		top-[-10px]
-		left-[-10px]
+		top-[-5rem]
+		left-[-5rem]
 		w-[120vw]
 		h-[120vh]
 		bg-[rgba(0,0,0,0.5)]
