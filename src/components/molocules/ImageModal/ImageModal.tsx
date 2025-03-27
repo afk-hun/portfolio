@@ -26,11 +26,6 @@ export function ImageModal({
   onRightClick,
   onClose,
 }: ImageModalProps) {
-  // ${
-  //     show
-  //       ? "opacity-100 transition-opacity duration-500"
-  //       : " opacity-0 transition-opacity duration-500"
-  //   }
   return (
     <div
       ref={ref}
@@ -41,6 +36,7 @@ export function ImageModal({
 			w-[100vw]
 			h-[100vh]
 			z-50
+			
 		`}
     >
       <div
@@ -50,8 +46,8 @@ export function ImageModal({
 		left-[-5rem]
 		w-[120vw]
 		h-[120vh]
-		bg-[rgba(0,0,0,0.5)]
-		blur
+		bg-[#4c4c4cb0]
+		backdrop-blur-xs 
 	`}
       />
       <button
@@ -133,6 +129,7 @@ export function ImageModal({
             objectFit: "contain",
             padding: "5rem",
             transition: "all 300ms",
+            filter: "drop-shadow(0 0 1rem rgba(0, 0, 0, 0.7))",
           }}
           priority
         />

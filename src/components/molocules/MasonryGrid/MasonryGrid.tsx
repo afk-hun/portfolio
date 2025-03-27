@@ -6,6 +6,7 @@ import Portal from "@/components/Portal/Portal";
 import { ImageModal } from "../ImageModal/ImageModal";
 import { useRef, useState } from "react";
 import { CSSTransition } from "react-transition-group";
+import { useDisplaySize } from "@/hooks/display";
 
 type ImageData = {
   id: number;
@@ -23,7 +24,9 @@ const Masonry: React.FC<MasonryProps> = ({ images }) => {
   const [activeImage, setActiveImage] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const nodeRef = useRef(null);
+  const size = useDisplaySize();
 
+  console.log("size", size);
   return (
     <>
       <Portal>
@@ -70,11 +73,11 @@ const Masonry: React.FC<MasonryProps> = ({ images }) => {
                 key={id}
                 className={"item"}
                 style={{
-                  minWidth: `${width}px`,
-                  minHeight: `${height}px`,
+                  minWidth: `${width / 10}px`,
+                  minHeight: `${height / 10}px`,
                 }}
               >
-                <span
+                {/* <span
                   style={{
                     color: "#ff00ff",
                     top: "10px",
@@ -82,15 +85,20 @@ const Masonry: React.FC<MasonryProps> = ({ images }) => {
                     position: "absolute",
                     zIndex: 1,
                   }}
-                >{`w:${width}-h:${height}`}</span>
+                >{`w:${width}-h:${height}`}</span> */}
                 <Image
                   className={"image"}
-                  fill
+                  style={{ cursor: size !== "mobile" ? "pointer" : "default" }}
+                  fill={size !== "mobile"}
+                  width={size === "mobile" ? width : undefined}
+                  height={size === "mobile" ? height : undefined}
                   src={src}
                   alt={alt}
                   onClick={() => {
-                    setActiveImage(index);
-                    setIsOpen(true);
+                    if (size !== "mobile") {
+                      setActiveImage(index);
+                      setIsOpen(true);
+                    }
                   }}
                 />
               </div>
