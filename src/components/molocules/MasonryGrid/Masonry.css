@@ -16,18 +16,18 @@
 }
 
 .image {
-  /* width: 100%; */
+  width: 100%;
   height: auto;
   object-fit: cover;
   cursor: pointer;
 }
 
-@media only screen and (min-width: 720px) {
+@media only screen and (min-width: 768px) {
   .item {
     flex: 1 0 auto;
   }
 }
-@media only screen and (min-width: 1000px) {
+@media only screen and (min-width: 1024px) {
   .item {
     flex: 1 0 auto;
   }
