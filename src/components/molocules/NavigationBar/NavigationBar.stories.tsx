@@ -53,7 +53,6 @@ const meta = {
         url: "https://github.com",
       },
     ],
-    onLangSelect: (lang: string) => console.log(lang),
   },
 } satisfies Meta<typeof NavigationBar>;
 

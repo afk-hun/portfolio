@@ -1,19 +1,28 @@
 "use client";
+import { redirect, usePathname } from "@/i18n/navigation";
+import { useLocale } from "next-intl";
 import { useState } from "react";
 import type { MouseEvent } from "react";
 
-interface LangSelectProps {
-  onLangSelect: (lang: string) => void;
-}
-
-export function LangSelect({ onLangSelect }: LangSelectProps) {
-  const [selectedLang, setSelectedLang] = useState("en");
+export function LangSelect() {
+  const locale = useLocale();
+  const [selectedLang, setSelectedLang] = useState(locale);
   const [isHovered, setIsHovered] = useState(false);
+  const pathname = usePathname();
+
+  const pathSegments = pathname.split("/");
+  const slug = pathSegments[1] === "projects" ? pathSegments[2] : null;
 
   function langSelectHandler(event: MouseEvent<HTMLLIElement>): void {
     const lang = event.currentTarget.textContent?.toLocaleLowerCase() || "en";
     setSelectedLang(lang);
-    onLangSelect(lang);
+    redirect({
+      href:
+        pathname === "/projects/[slug]" && slug
+          ? { pathname: "/projects/[slug]", params: { slug } }
+          : { pathname: pathname as "/" | "/about" },
+      locale: lang,
+    });
   }
 
   return (
@@ -28,7 +37,6 @@ export function LangSelect({ onLangSelect }: LangSelectProps) {
                 ${isHovered || selectedLang === "en" ? "opacity-100" : "opacity-0"} 
                 ${selectedLang === "en" ? "font-bold" : ""}
                 `}
-        // ${!isHovered ? "translate-x-[calc(100%+--spacing(1))]" : "translate-x-0"}
       >
         EN
       </li>

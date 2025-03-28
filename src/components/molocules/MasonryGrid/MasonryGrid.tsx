@@ -26,7 +26,6 @@ const Masonry: React.FC<MasonryProps> = ({ images }) => {
   const nodeRef = useRef(null);
   const size = useDisplaySize();
 
-  console.log("size", size);
   return (
     <>
       <Portal>
@@ -65,19 +64,16 @@ const Masonry: React.FC<MasonryProps> = ({ images }) => {
         </CSSTransition>
       </Portal>
       <div className={"masonry"}>
-        {images.map(
-          ({ id, src, width, height, alt }, index) => (
-            console.log("width", width, "height", height),
-            (
-              <div
-                key={id}
-                className={"item"}
-                style={{
-                  minWidth: `${width / 10}px`,
-                  minHeight: `${height / 10}px`,
-                }}
-              >
-                {/* <span
+        {images.map(({ id, src, width, height, alt }, index) => (
+          <div
+            key={id}
+            className={"item"}
+            style={{
+              minWidth: `${width / 10}px`,
+              minHeight: `${height / 10}px`,
+            }}
+          >
+            {/* <span
                   style={{
                     color: "#ff00ff",
                     top: "10px",
@@ -86,25 +82,23 @@ const Masonry: React.FC<MasonryProps> = ({ images }) => {
                     zIndex: 1,
                   }}
                 >{`w:${width}-h:${height}`}</span> */}
-                <Image
-                  className={"image"}
-                  style={{ cursor: size !== "mobile" ? "pointer" : "default" }}
-                  fill={size !== "mobile"}
-                  width={size === "mobile" ? width : undefined}
-                  height={size === "mobile" ? height : undefined}
-                  src={src}
-                  alt={alt}
-                  onClick={() => {
-                    if (size !== "mobile") {
-                      setActiveImage(index);
-                      setIsOpen(true);
-                    }
-                  }}
-                />
-              </div>
-            )
-          )
-        )}
+            <Image
+              className={"image"}
+              style={{ cursor: size !== "mobile" ? "pointer" : "default" }}
+              fill={size !== "mobile"}
+              width={size === "mobile" ? width : undefined}
+              height={size === "mobile" ? height : undefined}
+              src={src}
+              alt={alt}
+              onClick={() => {
+                if (size !== "mobile") {
+                  setActiveImage(index);
+                  setIsOpen(true);
+                }
+              }}
+            />
+          </div>
+        ))}
       </div>
     </>
   );

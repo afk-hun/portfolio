@@ -1,3 +1,4 @@
+"use client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faGithub,
@@ -12,6 +13,7 @@ import AFK_LOGO from "../../../../public/images/afk-logo.svg";
 import Image from "next/image";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { usePathname } from "@/i18n/navigation";
 
 type SocialMedia = {
   icon: "linkedin" | "github" | "youtube" | "instagram" | IconProp;
@@ -27,15 +29,15 @@ type Project = {
 interface NavigationBarProps {
   projects: Project[];
   socialMedia: SocialMedia[];
-  onLangSelect: (lang: string) => void;
 }
 
-export function NavigationBar({
-  projects,
-  socialMedia,
-  onLangSelect,
-}: NavigationBarProps) {
-  const [selectedMenu, setSelectedMenu] = useState("portfolio");
+export function NavigationBar({ projects, socialMedia }: NavigationBarProps) {
+  const path = usePathname();
+  const pathSegments = path.split("/");
+  const page = pathSegments[1];
+  const [selectedMenu, setSelectedMenu] = useState(
+    page === "" ? "portfolio" : page
+  );
   const t = useTranslations("navbar");
 
   const mediaIcons: SocialMedia[] = socialMedia
@@ -67,18 +69,17 @@ export function NavigationBar({
     })
     .filter((social): social is SocialMedia => social !== undefined);
 
-  function selectedLangHandler(lang: string): void {
-    onLangSelect(lang);
-  }
-
   return (
-    <nav className="flex flex-col h-full justify-between ">
+    <nav className="flex flex-col min-w-[200px] w-[200px] gap-4">
       <Link href={"/"} className="px-1 py-2">
         <Image
-          className="w-[100px] h-auto"
+          style={{
+            width: "125px",
+            height: "auto",
+          }}
           src={AFK_LOGO}
           width={100}
-          height={50}
+          height={100}
           alt="AFK Logo"
           priority
         />
@@ -129,7 +130,7 @@ export function NavigationBar({
         </li>
       </ul>
       <div className="flex flex-col gap-2">
-        <LangSelect onLangSelect={selectedLangHandler} />
+        <LangSelect />
         <div className="flex gap-2 px-1 py-2">
           {mediaIcons.map((social) => {
             return (

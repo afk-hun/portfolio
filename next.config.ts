@@ -15,7 +15,15 @@ const nextConfig: NextConfig = {
     reactCompiler: false,
   },
   images: {
-    domains: ["picsum.photos"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "picsum.photos",
+        // port: '',
+        // pathname: '/account123/**',
+        // search: '',
+      },
+    ],
   },
 };
 
