@@ -1,18 +1,11 @@
 "use client";
-import { redirect, usePathname, useRouter } from "@/i18n/navigation";
-import { Locale } from "@/i18n/routing";
+import { usePathname, useRouter } from "@/i18n/navigation";
+import { useLocale } from "next-intl";
 import { useState } from "react";
 import type { MouseEvent } from "react";
 
-interface LangSelectProps {
-  locale: Locale;
-}
-
-export function LangSelect({ locale }: LangSelectProps) {
-  // const locale = useLocale();
-  // console.log("[LangSelect] locale", locale);
-  // const [selectedLang, setSelectedLang] = useState(locale);
-  // console.log("[LangSelect] selectedLang", selectedLang);
+export function LangSelect() {
+  const locale = useLocale();
   const [isHovered, setIsHovered] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
@@ -21,28 +14,16 @@ export function LangSelect({ locale }: LangSelectProps) {
   const slug = pathSegments[1] === "projects" ? pathSegments[2] : null;
 
   function langSelectHandler(event: MouseEvent<HTMLLIElement>): void {
-    const lang = event.currentTarget.textContent?.toLocaleLowerCase() || "en";
-    console.log("[LangSelect] lang", lang);
-    // setSelectedLang(lang);
-    // redirect({
-    //   href:
-    //     pathname === "/projects/[slug]" && slug
-    //       ? { pathname: "/projects/[slug]", params: { slug } }
-    //       : { pathname: pathname as "/" | "/about" },
-    //   locale: lang,
-    // });
+    const lang = event.currentTarget.textContent?.toLocaleLowerCase() || "";
 
-    // const localizedPath =
-    // pathname === "/projects/[slug]" && slug
-    //   ? `/projects/${slug}`
-    //   : pathname;
-
-    router.push(
-      pathname === "/projects/[slug]" && slug
-        ? { pathname: "/projects/[slug]", params: { slug } }
-        : { pathname: pathname as "/" | "/about" },
-      { locale: lang }
-    );
+    if (pathname === "/projects/[slug]" && slug) {
+      router.push(
+        { pathname: "/projects/[slug]", params: { slug } },
+        { locale: lang }
+      );
+    } else {
+      router.push({ pathname: pathname as "/" | "/about" }, { locale: lang });
+    }
   }
 
   return (
