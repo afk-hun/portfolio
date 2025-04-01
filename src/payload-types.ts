@@ -85,9 +85,11 @@ export interface Config {
   };
   globals: {
     about: About;
+    portfolio: Portfolio;
   };
   globalsSelect: {
     about: AboutSelect<false> | AboutSelect<true>;
+    portfolio: PortfolioSelect<false> | PortfolioSelect<true>;
   };
   locale: 'en' | 'se' | 'hu';
   user: User & {
@@ -454,11 +456,39 @@ export interface About {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "portfolio".
+ */
+export interface Portfolio {
+  id: string;
+  portfolio: {
+    image: string | Media;
+    id?: string | null;
+  }[];
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "about_select".
  */
 export interface AboutSelect<T extends boolean = true> {
   aboutMe?: T;
   images?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "portfolio_select".
+ */
+export interface PortfolioSelect<T extends boolean = true> {
+  portfolio?:
     | T
     | {
         image?: T;

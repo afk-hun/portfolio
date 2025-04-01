@@ -27,7 +27,7 @@ export const About: GlobalConfig = {
     {
       type: "array",
       name: "images",
-      label: "Images for the about page",
+      label: "Images for About page",
       required: true,
       minRows: 1,
       maxRows: 10,
