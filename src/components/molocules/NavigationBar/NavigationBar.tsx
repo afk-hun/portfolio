@@ -13,7 +13,7 @@ import AFK_LOGO from "../../../../public/images/afk-logo.svg";
 import Image from "next/image";
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { usePathname } from "@/i18n/navigation";
+import { Link as IntlLink, usePathname } from "@/i18n/navigation";
 import { Locale } from "@/i18n/routing";
 
 type SocialMedia = {
@@ -96,7 +96,9 @@ export function NavigationBar({ projects, socialMedia }: NavigationBarProps) {
           `}
           onClick={() => setSelectedMenu("portfolio")}
         >
-          <Link href="/">{t("portfolio")}</Link>
+          <IntlLink href="/" locale={locale}>
+            {t("portfolio")}
+          </IntlLink>
         </li>
         <li>
           {t("projects")}
@@ -113,7 +115,15 @@ export function NavigationBar({ projects, socialMedia }: NavigationBarProps) {
                   `}
                   onClick={() => setSelectedMenu(project.id)}
                 >
-                  <Link href={`/projects/${project.url}`}>{project.name}</Link>
+                  <IntlLink
+                    href={{
+                      pathname: "/projects/[slug]",
+                      params: { slug: project.url },
+                    }}
+                    locale={locale}
+                  >
+                    {project.name}
+                  </IntlLink>
                 </li>
               );
             })}
@@ -128,15 +138,17 @@ export function NavigationBar({ projects, socialMedia }: NavigationBarProps) {
         `}
           onClick={() => setSelectedMenu("about")}
         >
-          <Link href="/about">{t("about")}</Link>
+          <IntlLink href="/about" locale={locale}>
+            {t("about")}
+          </IntlLink>
         </li>
       </ul>
       <div className="flex flex-col gap-2">
-        <LangSelect locale={locale} />
+        <LangSelect />
         <div className="flex gap-2 px-1 py-2">
           {mediaIcons.map((social) => {
             return (
-              <Link key={social.url} href={social.url}>
+              <Link key={social.url} href={{ pathname: social.url }}>
                 <FontAwesomeIcon icon={social.icon} />
               </Link>
             );
