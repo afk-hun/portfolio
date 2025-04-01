@@ -12,8 +12,9 @@ import { LangSelect } from "../LangSelect/LangSelect";
 import AFK_LOGO from "../../../../public/images/afk-logo.svg";
 import Image from "next/image";
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
+import { Locale } from "@/i18n/routing";
 
 type SocialMedia = {
   icon: "linkedin" | "github" | "youtube" | "instagram" | IconProp;
@@ -32,6 +33,7 @@ interface NavigationBarProps {
 }
 
 export function NavigationBar({ projects, socialMedia }: NavigationBarProps) {
+  const locale = useLocale() as Locale;
   const path = usePathname();
   const pathSegments = path.split("/");
   const page = pathSegments[1];
@@ -130,7 +132,7 @@ export function NavigationBar({ projects, socialMedia }: NavigationBarProps) {
         </li>
       </ul>
       <div className="flex flex-col gap-2">
-        <LangSelect />
+        <LangSelect locale={locale} />
         <div className="flex gap-2 px-1 py-2">
           {mediaIcons.map((social) => {
             return (
