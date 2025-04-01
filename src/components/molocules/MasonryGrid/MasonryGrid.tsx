@@ -7,17 +7,10 @@ import { ImageModal } from "../ImageModal/ImageModal";
 import { useRef, useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import { useDisplaySize } from "@/hooks/display";
-
-type ImageData = {
-  id: number;
-  width: number;
-  height: number;
-  src: string;
-  alt: string;
-};
+import { Media } from "@/payload-types";
 
 interface MasonryProps {
-  images: ImageData[];
+  images: Media[];
 }
 
 const Masonry: React.FC<MasonryProps> = ({ images }) => {
@@ -38,8 +31,8 @@ const Masonry: React.FC<MasonryProps> = ({ images }) => {
         >
           <ImageModal
             ref={nodeRef}
-            src={images[activeImage].src}
-            alt={images[activeImage].alt}
+            src={images[activeImage].url || ""}
+            alt={images[activeImage].alt || "Image description not available"}
             hasMany={images.length > 1}
             onLeftClick={function (): void {
               setActiveImage((prev) => {
@@ -64,13 +57,13 @@ const Masonry: React.FC<MasonryProps> = ({ images }) => {
         </CSSTransition>
       </Portal>
       <div className={"masonry"}>
-        {images.map(({ id, src, width, height, alt }, index) => (
+        {images.map(({ id, url, width, height, alt }, index) => (
           <div
             key={id}
             className={"item"}
             style={{
-              minWidth: `${width / 10}px`,
-              minHeight: `${height / 10}px`,
+              minWidth: `${(width ?? 100) / 15}px`,
+              minHeight: `${(height ?? 100) / 15}px`,
             }}
           >
             {/* <span
@@ -83,13 +76,15 @@ const Masonry: React.FC<MasonryProps> = ({ images }) => {
                   }}
                 >{`w:${width}-h:${height}`}</span> */}
             <Image
+              priority
               className={"image"}
               style={{ cursor: size !== "mobile" ? "pointer" : "default" }}
+              sizes={size !== "mobile" ? "auto" : "auto"}
               fill={size !== "mobile"}
-              width={size === "mobile" ? width : undefined}
-              height={size === "mobile" ? height : undefined}
-              src={src}
-              alt={alt}
+              width={size === "mobile" ? width || 100 : undefined}
+              height={size === "mobile" ? height || 100 : undefined}
+              src={url || ""}
+              alt={alt || "Image description not available"}
               onClick={() => {
                 if (size !== "mobile") {
                   setActiveImage(index);

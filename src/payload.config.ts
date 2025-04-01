@@ -17,6 +17,7 @@ import { plugins } from "./plugins";
 import { defaultLexical } from "@/fields/defaultLexical";
 import { getServerSideURL } from "./utilities/getURL";
 import { About } from "./globals/About/config";
+import { Portfolio } from "./globals/Portfolio/config";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -68,7 +69,7 @@ export default buildConfig({
     url: process.env.DATABASE_URI || "",
   }),
   collections: [Media, Users],
-  globals: [About],
+  globals: [About, Portfolio],
   cors: [getServerSideURL()].filter(Boolean),
   //globals: [],
   plugins: [
