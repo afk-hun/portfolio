@@ -8,7 +8,7 @@ export const ImagesBlock: React.FC<ImagesBlockProps> = ({ images }) => {
   });
 
   return (
-    <div className="my-16">
+    <div className="">
       <Masonry images={pictures} />
     </div>
   );

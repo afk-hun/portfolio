@@ -54,7 +54,7 @@ export default async function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <div id="myportal" />
-          <div className="flex  p-8 justify-center">
+          <div className="flex p-8 md:p-14 lg:p-20 justify-center">
             <div className="flex gap-4 w-full max-w-[1200px]">
               <NavigationBar projects={projects} socialMedia={[]} />
               {children}
