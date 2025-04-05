@@ -22,17 +22,20 @@ export default async function About() {
   setRequestLocale(locale);
 
   return (
-    <div className="w-full flex flex-col md:flex-row md:space-between gap-4">
+    <div className="w-full flex flex-col  md:flex-row md:space-between gap-4">
       <RichText data={aboutMe} />
       {images &&
         images.map((image) => {
           const img = image.image as Media;
           return (
-            <div key={image.id}>
+            <div
+              key={image.id}
+              className="flex flex-row align-center justify-center md:flex-col justify-center"
+            >
               <Image
                 src={img.url || "https://picsum.photos/id/237/1920/1080"}
                 width={300}
-                height={500}
+                height={900}
                 alt={img.alt || "missing alt"}
               />
             </div>
