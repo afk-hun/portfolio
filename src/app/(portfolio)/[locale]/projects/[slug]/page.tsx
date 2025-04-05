@@ -8,6 +8,8 @@ import React, { cache } from "react";
 import { RenderBlocks } from "@/blocks/RenderBlocks";
 import { generateMeta } from "@/utilities/generateMeta";
 import { Locale } from "@/i18n/routing";
+import Image from "next/image";
+import { Media } from "@/payload-types";
 // import PageClient from "./page.client";
 // import { LivePreviewListener } from "@/components/LivePreviewListener";
 
@@ -56,6 +58,7 @@ export default async function Page({ params: paramsPromise }: Args) {
       locale,
     });
 
+  const mainImage = page?.mainImage as Media;
   //   // Remove this code once your website is seeded
   //   if (!page && slug === "home") {
   //     page = homeStatic;
@@ -64,14 +67,26 @@ export default async function Page({ params: paramsPromise }: Args) {
   const { layout } = page;
 
   return (
-    <article className="pt-16 pb-24">
+    <article className="flex flex-col gap-12">
       {/* <PageClient /> */}
       {/* Allows redirects for valid pages too */}
       {/* <PayloadRedirects disableNotFound url={url} /> */}
 
       {/* {draft && <LivePreviewListener />} */}
 
-      <h1 className="text-4xl font-bold text-center mb-8">{page?.title}</h1>
+      <h1 className="text-4xl font-bold">{page?.title}</h1>
+      <Image
+        className="self-center w-full h-auto aspect-[3/1] md:w-[80%] md:h-auto"
+        style={{
+          objectFit: "cover",
+          objectPosition: "center",
+        }}
+        src={mainImage.url || ""}
+        alt={mainImage.alt || ""}
+        width={1000}
+        height={500}
+      />
+
       {layout && <RenderBlocks blocks={layout} />}
     </article>
   );

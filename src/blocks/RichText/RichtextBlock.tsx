@@ -4,7 +4,7 @@ import RichText from "@/components/RichText";
 
 export const RichTextBlock: React.FC<RichtextBlockProps> = ({ content }) => {
   return (
-    <div className="my-16">
+    <div className="">
       <RichText data={content} />
     </div>
   );

@@ -112,7 +112,7 @@ export function NavigationBar({ projects, socialMedia }: NavigationBarProps) {
 
   return (
     <nav className="flex flex-col min-w-[200px] w-[200px] gap-4">
-      <Link href={"/"} className="px-1 py-2">
+      <IntlLink href={"/"} locale={locale} className="px-1 py-2">
         <Image
           style={{
             width: "125px",
@@ -124,7 +124,7 @@ export function NavigationBar({ projects, socialMedia }: NavigationBarProps) {
           alt="AFK Logo"
           priority
         />
-      </Link>
+      </IntlLink>
       <ul className="flex flex-col gap-2 px-1 py-2">
         <li
           id="portfolio"
