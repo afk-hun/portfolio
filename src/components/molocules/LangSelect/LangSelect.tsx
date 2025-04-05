@@ -1,29 +1,20 @@
 "use client";
-import { usePathname, useRouter } from "@/i18n/navigation";
 import { useLocale } from "next-intl";
 import { useState } from "react";
 import type { MouseEvent } from "react";
 
-export function LangSelect() {
+interface LangSelectProps {
+  onLangChange: (lang: string) => void;
+}
+
+export function LangSelect({ onLangChange }: LangSelectProps) {
   const locale = useLocale();
   const [isHovered, setIsHovered] = useState(false);
-  const pathname = usePathname();
-  const router = useRouter();
-
-  const pathSegments = pathname.split("/");
-  const slug = pathSegments[1] === "projects" ? pathSegments[2] : null;
 
   function langSelectHandler(event: MouseEvent<HTMLLIElement>): void {
     const lang = event.currentTarget.textContent?.toLocaleLowerCase() || "";
 
-    if (pathname === "/projects/[slug]" && slug) {
-      router.push(
-        { pathname: "/projects/[slug]", params: { slug } },
-        { locale: lang }
-      );
-    } else {
-      router.push({ pathname: pathname as "/" | "/about" }, { locale: lang });
-    }
+    onLangChange(lang);
   }
 
   return (

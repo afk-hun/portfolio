@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../../globals.css";
-import { NavigationBar } from "@/components/molocules/NavigationBar/NavigationBar";
+import {
+  NavigationBar,
+  Project,
+} from "@/components/molocules/NavigationBar/NavigationBar";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
+import configPromise from "@payload-config";
+import { getPayload } from "payload";
+import { cache } from "react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,6 +43,7 @@ export default async function RootLayout({
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
+  const projects = await queryProject();
 
   setRequestLocale(locale);
 
@@ -49,7 +56,7 @@ export default async function RootLayout({
           <div id="myportal" />
           <div className="flex  p-8 justify-center">
             <div className="flex gap-4 w-full max-w-[1200px]">
-              <NavigationBar projects={[]} socialMedia={[]} />
+              <NavigationBar projects={projects} socialMedia={[]} />
               {children}
             </div>
           </div>
@@ -58,3 +65,28 @@ export default async function RootLayout({
     </html>
   );
 }
+
+const queryProject = cache(async () => {
+  const payload = await getPayload({ config: configPromise });
+  const projectsData = await payload.find({
+    collection: "project",
+    draft: false,
+    limit: 1000,
+    locale: "all",
+    overrideAccess: false,
+    pagination: false,
+  });
+
+  const projects = projectsData.docs.map((project) => {
+    return {
+      id: project.id,
+      url: project.slug ?? {},
+      name:
+        typeof project.title === "object" && project.title !== null
+          ? project.title
+          : { en: "", se: "", hu: "" },
+    } as Project;
+  });
+
+  return projects;
+});
