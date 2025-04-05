@@ -21,18 +21,42 @@ const meta = {
     projects: [
       {
         id: "project-1",
-        name: "Project 1",
-        url: "#",
+        name: {
+          en: "Project 1",
+          se: "Projekt 1",
+          hu: "Projekt 1",
+        },
+        url: {
+          en: "project-1",
+          se: "projekt-1",
+          hu: "projekt-1",
+        },
       },
       {
         id: "project-2",
-        name: "Project 2",
-        url: "#",
+        name: {
+          en: "Project 2",
+          se: "Projekt 2",
+          hu: "Projekt 2",
+        },
+        url: {
+          en: "project-2",
+          se: "projekt-2",
+          hu: "projekt-2",
+        },
       },
       {
         id: "project-3",
-        name: "Project 3",
-        url: "#",
+        name: {
+          en: "Project 3",
+          se: "Projekt 3",
+          hu: "Projekt 3",
+        },
+        url: {
+          en: "project-3",
+          se: "projekt-3",
+          hu: "projekt-3",
+        },
       },
     ],
     socialMedia: [

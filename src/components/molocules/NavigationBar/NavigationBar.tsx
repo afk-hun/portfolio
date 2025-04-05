@@ -13,18 +13,27 @@ import AFK_LOGO from "../../../../public/images/afk-logo.svg";
 import Image from "next/image";
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { Link as IntlLink, usePathname } from "@/i18n/navigation";
+import { Link as IntlLink, usePathname, useRouter } from "@/i18n/navigation";
 import { Locale } from "@/i18n/routing";
+import { usePathname as useNextPathName } from "next/navigation";
 
 type SocialMedia = {
   icon: "linkedin" | "github" | "youtube" | "instagram" | IconProp;
   url: string;
 };
 
-type Project = {
+export type Project = {
   id: string;
-  name: string;
-  url: string;
+  name: {
+    en: string;
+    se: string;
+    hu: string;
+  };
+  url: {
+    en: string;
+    se: string;
+    hu: string;
+  };
 };
 
 interface NavigationBarProps {
@@ -37,8 +46,19 @@ export function NavigationBar({ projects, socialMedia }: NavigationBarProps) {
   const path = usePathname();
   const pathSegments = path.split("/");
   const page = pathSegments[1];
+
+  const realPath = useNextPathName();
+  const realPathSegments = realPath.split("/");
+  const slug = realPathSegments[3];
+
+  const router = useRouter();
+
+  const selectedProjectId = projects.find((project) => {
+    return Object.values(project.url).some((url) => url === slug);
+  })?.id;
+
   const [selectedMenu, setSelectedMenu] = useState(
-    page === "" ? "portfolio" : page
+    page === "projects" ? selectedProjectId : page === "" ? "portfolio" : page
   );
   const t = useTranslations("navbar");
 
@@ -70,6 +90,25 @@ export function NavigationBar({ projects, socialMedia }: NavigationBarProps) {
       }
     })
     .filter((social): social is SocialMedia => social !== undefined);
+
+  function handleLangChange(lang: string): void {
+    if (selectedMenu === "portfolio") {
+      router.push({ pathname: "/" }, { locale: lang });
+    } else if (selectedMenu === "about") {
+      router.push({ pathname: "/about" }, { locale: lang });
+    } else {
+      const projectSlug = projects.find(
+        (project) => project.id === selectedMenu
+      )?.url?.[lang as Locale];
+      if (projectSlug) {
+        router.push(
+          { pathname: "/projects/[slug]", params: { slug: projectSlug } },
+          { locale: lang }
+        );
+      }
+      // todo if project does not exist need a fallback to 404 page
+    }
+  }
 
   return (
     <nav className="flex flex-col min-w-[200px] w-[200px] gap-4">
@@ -113,16 +152,20 @@ export function NavigationBar({ projects, socialMedia }: NavigationBarProps) {
                     hover:font-bold
                     transition-all duration-300
                   `}
-                  onClick={() => setSelectedMenu(project.id)}
+                  onClick={() => {
+                    setSelectedMenu(project.id);
+                  }}
                 >
                   <IntlLink
                     href={{
                       pathname: "/projects/[slug]",
-                      params: { slug: project.url },
+                      params: {
+                        slug: project.url?.[locale] ?? "Unnamed Project",
+                      },
                     }}
                     locale={locale}
                   >
-                    {project.name}
+                    {project.name?.[locale]}
                   </IntlLink>
                 </li>
               );
@@ -144,7 +187,7 @@ export function NavigationBar({ projects, socialMedia }: NavigationBarProps) {
         </li>
       </ul>
       <div className="flex flex-col gap-2">
-        <LangSelect />
+        <LangSelect onLangChange={handleLangChange} />
         <div className="flex gap-2 px-1 py-2">
           {mediaIcons.map((social) => {
             return (
