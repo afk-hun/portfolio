@@ -55,10 +55,12 @@ export default async function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <div id='myportal' />
-          <div className='flex p-8 md:p-14 lg:p-20 justify-center'>
-            <div className='flex gap-4 w-full max-w-[1200px]'>
+          <div className='flex p-4 md:p-14 lg:p-20 justify-center'>
+            <div className='flex flex-col h-full md:flex-row gap-4 w-full max-w-[1200px]'>
               <ImagesProvider>
-                <NavigationBar projects={projects} socialMedia={[]} />
+                <div className='h-auto md:h-[100vh]'>
+                  <NavigationBar projects={projects} socialMedia={[]} />
+                </div>
                 {children}
               </ImagesProvider>
             </div>
