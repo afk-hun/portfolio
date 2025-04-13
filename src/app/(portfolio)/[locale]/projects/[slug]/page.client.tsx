@@ -33,7 +33,7 @@ const PageClient: React.FC<PageClientProps> = ({ mainImage, layout }) => {
   return (
     <>
       <Image
-        className='self-center w-full h-auto aspect-[3/1] md:w-[80%] md:h-auto'
+        className='self-center w-full h-auto aspect-[3/1] md:w-[90%] md:h-auto'
         style={{
           objectFit: 'cover',
           objectPosition: 'center',

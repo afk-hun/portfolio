@@ -73,21 +73,8 @@ export default async function Page({ params: paramsPromise }: Args) {
 
       {/* {draft && <LivePreviewListener />} */}
 
-      <h1 className='text-4xl font-bold'>{page?.title}</h1>
+      <h1 className='text-4xl font-light'>{page?.title}</h1>
       <PageClient mainImage={mainImage} layout={layout} />
-      {/* <Image
-        className="self-center w-full h-auto aspect-[3/1] md:w-[80%] md:h-auto"
-        style={{
-          objectFit: "cover",
-          objectPosition: "center",
-        }}
-        src={mainImage.url || ""}
-        alt={mainImage.alt || ""}
-        width={1000}
-        height={500}
-      />
-
-      {layout && <RenderBlocks blocks={layout} />} */}
     </article>
   );
 }

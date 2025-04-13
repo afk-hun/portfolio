@@ -90,10 +90,12 @@ export interface Config {
   globals: {
     about: About;
     portfolio: Portfolio;
+    social: Social;
   };
   globalsSelect: {
     about: AboutSelect<false> | AboutSelect<true>;
     portfolio: PortfolioSelect<false> | PortfolioSelect<true>;
+    social: SocialSelect<false> | SocialSelect<true>;
   };
   locale: 'en' | 'se' | 'hu';
   user: User & {
@@ -721,6 +723,20 @@ export interface Portfolio {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "social".
+ */
+export interface Social {
+  id: string;
+  socials: {
+    socialList?: ('github' | 'linkedin' | 'instagram' | 'youtube') | null;
+    link: string;
+    id?: string | null;
+  }[];
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "about_select".
  */
 export interface AboutSelect<T extends boolean = true> {
@@ -744,6 +760,22 @@ export interface PortfolioSelect<T extends boolean = true> {
     | T
     | {
         image?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "social_select".
+ */
+export interface SocialSelect<T extends boolean = true> {
+  socials?:
+    | T
+    | {
+        socialList?: T;
+        link?: T;
         id?: T;
       };
   updatedAt?: T;
