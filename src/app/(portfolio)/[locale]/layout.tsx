@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Poppins } from 'next/font/google';
 import '../../globals.css';
 import {
   NavigationBar,
   Project,
+  SocialIconType,
 } from '@/components/molecules/NavigationBar/NavigationBar';
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { routing } from '@/i18n/routing';
@@ -13,15 +14,14 @@ import configPromise from '@payload-config';
 import { getPayload } from 'payload';
 import { cache } from 'react';
 import { ImagesProvider } from '@/components/providers/ImageProvider';
+import { Social } from '@/payload-types';
+import { getCachedGlobal } from '@/utilities/getGlobals';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const PoppinsSans = Poppins({
   subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
+  variable: '--font-poppins',
+  display: 'swap',
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 });
 
 export const metadata: Metadata = {
@@ -44,6 +44,16 @@ export default async function RootLayout({
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
+
+  const portfolioData = (await getCachedGlobal('social', 1)()) as Social;
+  const socialMedia =
+    portfolioData?.socials.map((item) => {
+      return {
+        url: item.link,
+        icon: item.socialList as SocialIconType,
+      };
+    }) || [];
+
   const projects = await queryProject();
 
   setRequestLocale(locale);
@@ -51,15 +61,16 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <NextIntlClientProvider>
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
+        <body className={PoppinsSans.className}>
           <div id='myportal' />
           <div className='flex p-4 md:p-14 lg:p-20 justify-center'>
             <div className='flex flex-col h-full md:flex-row gap-4 w-full max-w-[1200px]'>
               <ImagesProvider>
                 <div className='h-auto md:h-[100vh]'>
-                  <NavigationBar projects={projects} socialMedia={[]} />
+                  <NavigationBar
+                    projects={projects}
+                    socialMedia={socialMedia}
+                  />
                 </div>
                 {children}
               </ImagesProvider>

@@ -14,6 +14,7 @@ interface MasonryProps {
 const Masonry: React.FC<MasonryProps> = ({ images }) => {
   const size = useDisplaySize();
   const imageContext = useContext(ImagesContext);
+  const delta = 13;
 
   return (
     <div className={'masonry'}>
@@ -22,14 +23,16 @@ const Masonry: React.FC<MasonryProps> = ({ images }) => {
           key={id}
           className={'item'}
           style={{
-            minWidth: `${(width ?? 100) / 15}px`,
-            minHeight: `${(height ?? 100) / 15}px`,
+            minWidth: `${size === 'mobile' ? 'unset' : `${(width ?? 100) / delta}px`}`,
+            minHeight: `${(height ?? 100) / delta}px`,
           }}
         >
           <Image
             priority
             className={'image'}
-            style={{ cursor: size !== 'mobile' ? 'pointer' : 'default' }}
+            style={{
+              cursor: size !== 'mobile' ? 'pointer' : 'default',
+            }}
             sizes={size !== 'mobile' ? 'auto' : 'auto'}
             fill={size !== 'mobile'}
             width={size === 'mobile' ? width || 100 : undefined}

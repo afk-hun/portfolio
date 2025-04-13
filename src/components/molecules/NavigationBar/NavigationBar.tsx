@@ -19,8 +19,10 @@ import { usePathname as useNextPathName } from 'next/navigation';
 import { faAnglesUp } from '@fortawesome/free-solid-svg-icons';
 import { useDisplaySize } from '@/hooks/display';
 
+export type SocialIconType = 'linkedin' | 'github' | 'youtube' | 'instagram';
+
 type SocialMedia = {
-  icon: 'linkedin' | 'github' | 'youtube' | 'instagram' | IconProp;
+  icon: SocialIconType | IconProp;
   url: string;
 };
 
@@ -61,6 +63,10 @@ export function NavigationBar({ projects, socialMedia }: NavigationBarProps) {
     if (display !== 'mobile') {
       setIsMenuOpen(false);
     }
+  }, [display]);
+
+  useEffect(() => {
+    setIsMenuOpen(false);
   }, [display, router]);
 
   const selectedProjectId = projects.find((project) => {
@@ -122,7 +128,7 @@ export function NavigationBar({ projects, socialMedia }: NavigationBarProps) {
 
   return (
     <nav
-      className={`flex flex-col w-full md:min-w-[200px] md:w-[200px] gap-4 sticky md:top-14 lg:top-20`}
+      className={`flex flex-col w-full  md:min-w-[200px] md:w-[200px] gap-4 sticky md:top-14 lg:top-20`}
     >
       <div className='flex flex-col gap-4'>
         <div className='w flex justify-between items-center'>
@@ -152,7 +158,8 @@ export function NavigationBar({ projects, socialMedia }: NavigationBarProps) {
           />
         </div>
         <div
-          className={`flex flex-col transition-all duration-300 
+          className={`flex flex-col transition-all duration-300
+            px-10 md:px-0 
             ${
               display === 'mobile'
                 ? isMenuOpen
@@ -163,21 +170,21 @@ export function NavigationBar({ projects, socialMedia }: NavigationBarProps) {
             overflow-hidden`}
         >
           <ul className='flex flex-col gap-2 px-1 py-2 '>
-            <li
-              id='portfolio'
-              className={`
-            ${selectedMenu === 'portfolio' ? 'font-bold' : ''}
-            hover:font-bold
-            transition-all duration-300
-          `}
-              onClick={() => setSelectedMenu('portfolio')}
-            >
-              <IntlLink href='/' locale={locale}>
+            <li id='portfolio' onClick={() => setSelectedMenu('portfolio')}>
+              <IntlLink
+                className={`
+                ${selectedMenu === 'portfolio' ? 'font-medium' : 'font-light'}
+                hover:font-medium
+                transition-all duration-300
+              `}
+                href='/'
+                locale={locale}
+              >
                 {t('portfolio')}
               </IntlLink>
             </li>
             <li>
-              {t('projects')}
+              <p className='font-light'>{t('projects')}</p>
               <ul className='flex flex-col gap-1 pl-4'>
                 {projects.map((project) => {
                   return (
@@ -185,8 +192,8 @@ export function NavigationBar({ projects, socialMedia }: NavigationBarProps) {
                       id={project.id}
                       key={project.id}
                       className={`
-                    ${selectedMenu === project.id ? 'font-bold' : ''}
-                    hover:font-bold
+                    ${selectedMenu === project.id ? 'font-medium' : 'font-light'}
+                    hover:font-medium
                     transition-all duration-300
                   `}
                       onClick={() => {
@@ -209,16 +216,15 @@ export function NavigationBar({ projects, socialMedia }: NavigationBarProps) {
                 })}
               </ul>
             </li>
-            <li
-              id='about'
-              className={`
-          ${selectedMenu === 'about' ? 'font-bold' : ''}
-          hover:font-bold
-          transition-all duration-300
-        `}
-              onClick={() => setSelectedMenu('about')}
-            >
-              <IntlLink href='/about' locale={locale}>
+            <li id='about' onClick={() => setSelectedMenu('about')}>
+              <IntlLink
+                className={`
+                ${selectedMenu === 'about' ? 'font-medium' : 'font-light'}
+                hover:font-medium
+                transition-all duration-300`}
+                href='/about'
+                locale={locale}
+              >
                 {t('about')}
               </IntlLink>
             </li>

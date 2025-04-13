@@ -1,27 +1,28 @@
 // storage-adapter-import-placeholder
-import { mongooseAdapter } from "@payloadcms/db-mongodb";
+import { mongooseAdapter } from '@payloadcms/db-mongodb';
 
-import sharp from "sharp"; // sharp-import
-import path from "path";
-import { buildConfig, PayloadRequest } from "payload";
-import { fileURLToPath } from "url";
+import sharp from 'sharp'; // sharp-import
+import path from 'path';
+import { buildConfig, PayloadRequest } from 'payload';
+import { fileURLToPath } from 'url';
 
-import { Media } from "./collections/Media";
-import { Users } from "./collections/Users";
-import { plugins } from "./plugins";
-import { defaultLexical } from "@/fields/defaultLexical";
-import { getServerSideURL } from "./utilities/getURL";
-import { About } from "./globals/About/config";
-import { Portfolio } from "./globals/Portfolio/config";
-import { Projects } from "./collections/Projects";
+import { Media } from './collections/Media';
+import { Users } from './collections/Users';
+import { plugins } from './plugins';
+import { defaultLexical } from '@/fields/defaultLexical';
+import { getServerSideURL } from './utilities/getURL';
+import { About } from './globals/About/config';
+import { Portfolio } from './globals/Portfolio/config';
+import { Projects } from './collections/Projects';
+import { Social } from './globals/Social/config';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
 export default buildConfig({
   localization: {
-    defaultLocale: "en",
-    locales: ["en", "se", "hu"],
+    defaultLocale: 'en',
+    locales: ['en', 'se', 'hu'],
   },
   admin: {
     components: {
@@ -62,20 +63,20 @@ export default buildConfig({
   // This config helps us configure global or default features that the other editors can inherit
   editor: defaultLexical,
   db: mongooseAdapter({
-    url: process.env.DATABASE_URI || "",
+    url: process.env.DATABASE_URI || '',
   }),
   collections: [Media, Users, Projects],
-  globals: [About, Portfolio],
+  globals: [About, Portfolio, Social],
   cors: [getServerSideURL()].filter(Boolean),
   //globals: [],
   plugins: [
     ...plugins,
     // storage-adapter-placeholder
   ],
-  secret: process.env.PAYLOAD_SECRET || "default_secret",
+  secret: process.env.PAYLOAD_SECRET || 'default_secret',
   sharp,
   typescript: {
-    outputFile: path.resolve(dirname, "payload-types.ts"),
+    outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   jobs: {
     access: {
@@ -86,7 +87,7 @@ export default buildConfig({
         // If there is no logged in user, then check
         // for the Vercel Cron secret to be present as an
         // Authorization header:
-        const authHeader = req.headers.get("authorization");
+        const authHeader = req.headers.get('authorization');
         return authHeader === `Bearer ${process.env.CRON_SECRET}`;
       },
     },
