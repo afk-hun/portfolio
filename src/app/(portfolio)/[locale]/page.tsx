@@ -2,6 +2,7 @@ import Masonry from '@/components/molecules/MasonryGrid/MasonryGrid';
 import { Media, Portfolio } from '@/payload-types';
 import { getCachedGlobal } from '@/utilities/getGlobals';
 import { setRequestLocale } from 'next-intl/server';
+import PageClient from './page.client';
 
 export async function generateMetadata({
   params,
@@ -33,6 +34,7 @@ export default async function Home({
     }) || [];
   return (
     <main className='w-auto'>
+      <PageClient images={images} />
       <Masonry images={images} />
     </main>
   );

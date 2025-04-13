@@ -11,7 +11,8 @@ interface ProfileImageProps {
 
 export const ProfileImage: React.FC<ProfileImageProps> = ({ images }) => {
   const [main, ...others] = images;
-  const [currentImage, setCurrentImage] = useState(0);
+  console.log('others', others);
+  const [currentImage, setCurrentImage] = useState(others.length - 1);
   const [isHovered, setIsHovered] = useState(false);
 
   return (

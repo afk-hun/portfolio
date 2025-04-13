@@ -1,31 +1,30 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next';
 
-import configPromise from "@payload-config";
-import { getPayload, type RequiredDataFromCollectionSlug } from "payload";
-import { draftMode } from "next/headers";
-import React, { cache } from "react";
+import configPromise from '@payload-config';
+import { getPayload, type RequiredDataFromCollectionSlug } from 'payload';
+// import { draftMode } from 'next/headers';
+import React, { cache } from 'react';
 
-import { RenderBlocks } from "@/blocks/RenderBlocks";
-import { generateMeta } from "@/utilities/generateMeta";
-import { Locale } from "@/i18n/routing";
-import Image from "next/image";
-import { Media } from "@/payload-types";
+import { generateMeta } from '@/utilities/generateMeta';
+import { Locale } from '@/i18n/routing';
+import { Media } from '@/payload-types';
+import PageClient from './page.client';
 // import PageClient from "./page.client";
 // import { LivePreviewListener } from "@/components/LivePreviewListener";
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise });
   const pages = await payload.find({
-    collection: "project",
+    collection: 'project',
     draft: false,
     limit: 1000,
-    locale: "all",
+    locale: 'all',
     overrideAccess: false,
     pagination: false,
   });
 
   const params = pages.docs.flatMap(({ slug }) => {
-    if (!slug || typeof slug !== "object") return [];
+    if (!slug || typeof slug !== 'object') return [];
 
     return Object.entries(slug).map(([locale, localizedSlug]) => {
       return {
@@ -45,14 +44,14 @@ type Args = {
 };
 
 export default async function Page({ params: paramsPromise }: Args) {
-  const { isEnabled: draft } = await draftMode();
+  // const { isEnabled: draft } = await draftMode();
   const paramsProps = await paramsPromise;
 
   const locale = paramsProps.locale;
-  const slug = paramsProps.slug || "home";
-  const url = "/" + slug;
+  const slug = paramsProps.slug || 'home';
+  // const url = '/' + slug;
 
-  const page: RequiredDataFromCollectionSlug<"project"> | null =
+  const page: RequiredDataFromCollectionSlug<'project'> | null =
     await queryProjectBySlug({
       slug,
       locale,
@@ -67,15 +66,16 @@ export default async function Page({ params: paramsPromise }: Args) {
   const { layout } = page;
 
   return (
-    <article className="flex flex-col gap-12">
+    <article className='flex flex-col gap-12'>
       {/* <PageClient /> */}
       {/* Allows redirects for valid pages too */}
       {/* <PayloadRedirects disableNotFound url={url} /> */}
 
       {/* {draft && <LivePreviewListener />} */}
 
-      <h1 className="text-4xl font-bold">{page?.title}</h1>
-      <Image
+      <h1 className='text-4xl font-bold'>{page?.title}</h1>
+      <PageClient mainImage={mainImage} layout={layout} />
+      {/* <Image
         className="self-center w-full h-auto aspect-[3/1] md:w-[80%] md:h-auto"
         style={{
           objectFit: "cover",
@@ -87,7 +87,7 @@ export default async function Page({ params: paramsPromise }: Args) {
         height={500}
       />
 
-      {layout && <RenderBlocks blocks={layout} />}
+      {layout && <RenderBlocks blocks={layout} />} */}
     </article>
   );
 }
@@ -98,16 +98,16 @@ export async function generateMetadata({
   const paramsProps = await paramsPromise;
 
   const locale = paramsProps.locale;
-  const slug = paramsProps.slug ?? "home";
+  const slug = paramsProps.slug ?? 'home';
 
   // const { slugs = "home", locale } = await paramsPromise;
-  // const page = await queryProjectBySlug({
-  //   slug,
-  //   locale,
-  // });
+  const page = await queryProjectBySlug({
+    slug,
+    locale,
+  });
 
-  // return generateMeta({ doc: page });
-  return {};
+  return generateMeta({ doc: page });
+  // return {};
 }
 
 const queryProjectBySlug = cache(
@@ -117,7 +117,7 @@ const queryProjectBySlug = cache(
     const payload = await getPayload({ config: configPromise });
 
     const result = await payload.find({
-      collection: "project",
+      collection: 'project',
       // draft,
       limit: 1,
       locale,
