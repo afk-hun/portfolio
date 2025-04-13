@@ -1,7 +1,7 @@
-import Masonry from "@/components/molocules/MasonryGrid/MasonryGrid";
-import { Media, Portfolio } from "@/payload-types";
-import { getCachedGlobal } from "@/utilities/getGlobals";
-import { setRequestLocale } from "next-intl/server";
+import Masonry from '@/components/molecules/MasonryGrid/MasonryGrid';
+import { Media, Portfolio } from '@/payload-types';
+import { getCachedGlobal } from '@/utilities/getGlobals';
+import { setRequestLocale } from 'next-intl/server';
 
 export async function generateMetadata({
   params,
@@ -12,7 +12,7 @@ export async function generateMetadata({
   //const t = await getTranslations({ locale, namespace: "Metadata" });
 
   return {
-    title: locale + " title",
+    title: locale + ' title',
   };
 }
 
@@ -23,7 +23,7 @@ export default async function Home({
 }) {
   const { locale } = await params;
 
-  const portfolioData = (await getCachedGlobal("portfolio", 1)()) as Portfolio;
+  const portfolioData = (await getCachedGlobal('portfolio', 1)()) as Portfolio;
   // Enable static rendering
   setRequestLocale(locale);
 
@@ -32,7 +32,7 @@ export default async function Home({
       return image.image as Media;
     }) || [];
   return (
-    <main className="w-auto">
+    <main className='w-auto'>
       <Masonry images={images} />
     </main>
   );
