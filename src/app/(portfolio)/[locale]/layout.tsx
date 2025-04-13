@@ -12,6 +12,7 @@ import { setRequestLocale } from 'next-intl/server';
 import configPromise from '@payload-config';
 import { getPayload } from 'payload';
 import { cache } from 'react';
+import { ImagesProvider } from '@/components/providers/ImageProvider';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -56,8 +57,10 @@ export default async function RootLayout({
           <div id='myportal' />
           <div className='flex p-8 md:p-14 lg:p-20 justify-center'>
             <div className='flex gap-4 w-full max-w-[1200px]'>
-              <NavigationBar projects={projects} socialMedia={[]} />
-              {children}
+              <ImagesProvider>
+                <NavigationBar projects={projects} socialMedia={[]} />
+                {children}
+              </ImagesProvider>
             </div>
           </div>
         </body>
