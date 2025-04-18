@@ -9,7 +9,7 @@ import {
 import Link from 'next/link';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { LangSelect } from '../LangSelect/LangSelect';
-import AFK_LOGO from '../../../../public/images/afk-logo.svg';
+import AFK_LOGO from '@public/images/afk-logo.svg';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
@@ -127,38 +127,40 @@ export function NavigationBar({ projects, socialMedia }: NavigationBarProps) {
   }
 
   return (
-    <nav
-      className={`flex flex-col w-full  md:min-w-[200px] md:w-[200px] gap-4 sticky md:top-14 lg:top-20`}
-    >
-      <div className='flex flex-col gap-4'>
-        <div className='w flex justify-between items-center'>
-          <IntlLink href={'/'} locale={locale} className='px-1 py-2'>
-            <Image
-              style={{
-                width: display === 'mobile' ? '80px' : '125px',
-                height: 'auto',
-              }}
-              src={AFK_LOGO}
-              width={100}
-              height={100}
-              alt='AFK Logo'
-              priority
-            />
-          </IntlLink>
-          <FontAwesomeIcon
-            className={`p-4 transition-all duration-300 ${isMenuOpen ? 'rotate-0' : 'rotate-180'}`}
-            style={{
-              display: display === 'mobile' ? 'block' : 'none',
-            }}
-            size='lg'
-            icon={faAnglesUp}
-            onClick={() => {
-              setIsMenuOpen(!isMenuOpen);
-            }}
-          />
-        </div>
-        <div
-          className={`flex flex-col transition-all duration-300
+    <>
+      {
+        <nav
+          className={`flex flex-col w-full  md:min-w-[200px] md:w-[200px] gap-4 sticky md:top-14 lg:top-20`}
+        >
+          <div className='flex flex-col gap-4'>
+            <div className='w flex justify-between items-center'>
+              <IntlLink href={'/'} locale={locale} className='px-1 py-2'>
+                <Image
+                  style={{
+                    width: display === 'mobile' ? '80px' : '125px',
+                    height: 'auto',
+                  }}
+                  src={AFK_LOGO.src}
+                  width={AFK_LOGO.width}
+                  height={AFK_LOGO.height}
+                  alt='AFK Logo'
+                  priority
+                />
+              </IntlLink>
+              <FontAwesomeIcon
+                className={`p-4 transition-all duration-300 ${isMenuOpen ? 'rotate-0' : 'rotate-180'}`}
+                style={{
+                  display: display === 'mobile' ? 'block' : 'none',
+                }}
+                size='lg'
+                icon={faAnglesUp}
+                onClick={() => {
+                  setIsMenuOpen(!isMenuOpen);
+                }}
+              />
+            </div>
+            <div
+              className={`flex flex-col transition-all duration-300
             px-10 md:px-0 
             ${
               display === 'mobile'
@@ -168,81 +170,84 @@ export function NavigationBar({ projects, socialMedia }: NavigationBarProps) {
                 : 'h-auto'
             }
             overflow-hidden`}
-        >
-          <ul className='flex flex-col gap-2 px-1 py-2 '>
-            <li id='portfolio' onClick={() => setSelectedMenu('portfolio')}>
-              <IntlLink
-                className={`
+            >
+              <ul className='flex flex-col gap-2 px-1 py-2 '>
+                <li id='portfolio' onClick={() => setSelectedMenu('portfolio')}>
+                  <IntlLink
+                    className={`
                 ${selectedMenu === 'portfolio' ? 'font-medium' : 'font-light'}
                 hover:font-medium
                 transition-all duration-300
               `}
-                href='/'
-                locale={locale}
-              >
-                {t('portfolio')}
-              </IntlLink>
-            </li>
-            <li>
-              <p className='font-light'>{t('projects')}</p>
-              <ul className='flex flex-col gap-1 pl-4'>
-                {projects.map((project) => {
-                  return (
-                    <li
-                      id={project.id}
-                      key={project.id}
-                      className={`
+                    href='/'
+                    locale={locale}
+                  >
+                    {t('portfolio')}
+                  </IntlLink>
+                </li>
+                <li>
+                  <p className='font-light'>{t('projects')}</p>
+                  <ul className='flex flex-col gap-1 pl-4'>
+                    {projects.map((project) => {
+                      return (
+                        <li
+                          id={project.id}
+                          key={project.id}
+                          className={`
                     ${selectedMenu === project.id ? 'font-medium' : 'font-light'}
                     hover:font-medium
                     transition-all duration-300
                   `}
-                      onClick={() => {
-                        setSelectedMenu(project.id);
-                      }}
-                    >
-                      <IntlLink
-                        href={{
-                          pathname: '/projects/[slug]',
-                          params: {
-                            slug: project.url?.[locale] ?? 'Unnamed Project',
-                          },
-                        }}
-                        locale={locale}
-                      >
-                        {project.name?.[locale]}
-                      </IntlLink>
-                    </li>
-                  );
-                })}
-              </ul>
-            </li>
-            <li id='about' onClick={() => setSelectedMenu('about')}>
-              <IntlLink
-                className={`
+                          onClick={() => {
+                            setSelectedMenu(project.id);
+                          }}
+                        >
+                          <IntlLink
+                            href={{
+                              pathname: '/projects/[slug]',
+                              params: {
+                                slug:
+                                  project.url?.[locale] ?? 'Unnamed Project',
+                              },
+                            }}
+                            locale={locale}
+                          >
+                            {project.name?.[locale]}
+                          </IntlLink>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </li>
+                <li id='about' onClick={() => setSelectedMenu('about')}>
+                  <IntlLink
+                    className={`
                 ${selectedMenu === 'about' ? 'font-medium' : 'font-light'}
                 hover:font-medium
                 transition-all duration-300`}
-                href='/about'
-                locale={locale}
-              >
-                {t('about')}
-              </IntlLink>
-            </li>
-          </ul>
-          <div className='flex flex-col gap-2'>
-            <LangSelect onLangChange={handleLangChange} />
-            <div className='flex gap-2 px-1 py-2'>
-              {mediaIcons.map((social) => {
-                return (
-                  <Link key={social.url} href={{ pathname: social.url }}>
-                    <FontAwesomeIcon icon={social.icon} />
-                  </Link>
-                );
-              })}
+                    href='/about'
+                    locale={locale}
+                  >
+                    {t('about')}
+                  </IntlLink>
+                </li>
+              </ul>
+              <div className='flex flex-col gap-2'>
+                <LangSelect onLangChange={handleLangChange} />
+                <div className='flex gap-2 px-1 py-2'>
+                  {mediaIcons.map((social) => {
+                    return (
+                      <Link key={social.url} href={{ pathname: social.url }}>
+                        <FontAwesomeIcon icon={social.icon} />
+                      </Link>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-    </nav>
+        </nav>
+      }
+    </>
   );
 }

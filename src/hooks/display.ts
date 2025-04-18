@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export function useDisplaySize() {
-  const [size, setSize] = useState<"mobile" | "tablet" | "desktop" | null>(
+  const [size, setSize] = useState<'mobile' | 'tablet' | 'desktop' | null>(
     null
   );
 
@@ -9,18 +9,18 @@ export function useDisplaySize() {
     const updateSize = () => {
       const width = window.innerWidth;
       if (width <= 768) {
-        setSize("mobile");
+        setSize('mobile');
       } else if (width <= 1024) {
-        setSize("tablet");
+        setSize('tablet');
       } else {
-        setSize("desktop");
+        setSize('desktop');
       }
     };
 
-    updateSize(); // Set initial size
+    // updateSize(); // Set initial size
 
-    window.addEventListener("resize", updateSize);
-    return () => window.removeEventListener("resize", updateSize);
+    window.addEventListener('resize', updateSize);
+    return () => window.removeEventListener('resize', updateSize);
   }, []);
 
   return size;
