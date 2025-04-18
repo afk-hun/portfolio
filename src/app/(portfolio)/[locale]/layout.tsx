@@ -16,6 +16,7 @@ import { cache } from 'react';
 import { ImagesProvider } from '@/components/providers/ImageProvider';
 import { Social } from '@/payload-types';
 import { getCachedGlobal } from '@/utilities/getGlobals';
+import DynamicFavIcon from '@/components/DynamicFavIcon/DynamicFavIcon';
 
 const PoppinsSans = Poppins({
   subsets: ['latin'],
@@ -62,6 +63,7 @@ export default async function RootLayout({
     <html lang={locale}>
       <NextIntlClientProvider>
         <body className={PoppinsSans.className}>
+          <DynamicFavIcon />
           <div id='myportal' />
           <div className='flex p-4 md:p-14 lg:p-20 justify-center'>
             <div className='flex flex-col h-full md:flex-row gap-4 w-full max-w-[1200px]'>
