@@ -20,6 +20,12 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@public/*": [
+        "./public/*"
+      ],
       "@payload-config": [
         "./src/payload.config.ts"
       ],

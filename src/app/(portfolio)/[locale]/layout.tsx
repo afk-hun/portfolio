@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Poppins } from 'next/font/google';
+import { Poppins, Lexend } from 'next/font/google';
 import '../../globals.css';
 import {
   NavigationBar,
@@ -21,6 +21,12 @@ import DynamicFavIcon from '@/components/DynamicFavIcon/DynamicFavIcon';
 const PoppinsSans = Poppins({
   subsets: ['latin'],
   variable: '--font-poppins',
+  display: 'swap',
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+});
+const LexendSans = Lexend({
+  subsets: ['latin'],
+  variable: '--font-lexend',
   display: 'swap',
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 });
@@ -62,19 +68,14 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <NextIntlClientProvider>
-        <body className={PoppinsSans.className}>
+        <body className={PoppinsSans.className + ' ' + LexendSans.className}>
           <DynamicFavIcon />
           <div id='myportal' />
-          <div className='flex p-4 md:p-14 lg:p-20 justify-center'>
+          <div className='flex p-4 md:p-14 lg:p-20 justify-center h-auto md:h-[100vh]'>
             <div className='flex flex-col h-full md:flex-row gap-4 w-full max-w-[1200px]'>
               <ImagesProvider>
-                <div className='h-auto md:h-[100vh]'>
-                  <NavigationBar
-                    projects={projects}
-                    socialMedia={socialMedia}
-                  />
-                </div>
-                {children}
+                <NavigationBar projects={projects} socialMedia={socialMedia} />
+                <div className='overflow-y-scroll'>{children}</div>
               </ImagesProvider>
             </div>
           </div>
