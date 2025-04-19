@@ -1,16 +1,23 @@
-import type { Metadata } from "next";
+import type { Metadata } from 'next';
 
-import type { Media, Project, Config } from "../payload-types";
+import type {
+  Media,
+  Project,
+  Config,
+  About,
+  Portfolio,
+} from '../payload-types';
 
-import { mergeOpenGraph } from "./mergeOpenGraph";
-import { getServerSideURL } from "./getURL";
+import { mergeOpenGraph } from './mergeOpenGraph';
+import { getServerSideURL } from './getURL';
+import { Locale } from 'next-intl';
 
-const getImageURL = (image?: Media | Config["db"]["defaultIDType"] | null) => {
+const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
   const serverUrl = getServerSideURL();
 
-  let url = serverUrl + "/website-template-OG.webp";
+  let url = serverUrl + 'images/AFK-default-SEO-image.webp';
 
-  if (image && typeof image === "object" && "url" in image) {
+  if (image && typeof image === 'object' && 'url' in image) {
     const ogUrl = image.sizes?.og?.url;
 
     url = ogUrl ? serverUrl + ogUrl : serverUrl + image.url;
@@ -26,14 +33,12 @@ export const generateMeta = async (args: {
 
   const ogImage = getImageURL(doc?.meta?.image);
 
-  const title = doc?.meta?.title
-    ? doc?.meta?.title + " | Payload Website Template"
-    : "Payload Website Template";
+  const title = doc?.meta?.title ? doc?.meta?.title : 'AFK Portfolio Site';
 
   return {
     description: doc?.meta?.description,
     openGraph: mergeOpenGraph({
-      description: doc?.meta?.description || "",
+      description: doc?.meta?.description || '',
       images: ogImage
         ? [
             {
@@ -42,7 +47,36 @@ export const generateMeta = async (args: {
           ]
         : undefined,
       title,
-      url: Array.isArray(doc?.slug) ? doc?.slug.join("/") : "/",
+      url: Array.isArray(doc?.slug) ? doc?.slug.join('/') : '/',
+    }),
+    title,
+  };
+};
+export const generateMetaForGlobal = async (args: {
+  doc: Partial<Portfolio | About> | null;
+  slug: string;
+  locale: Locale;
+}): Promise<Metadata> => {
+  const { doc, slug, locale } = args;
+  const serverUrl = getServerSideURL();
+
+  const ogImage = getImageURL(doc?.meta?.image);
+
+  const title = doc?.meta?.title ? doc?.meta?.title : 'AFK Portfolio Site';
+
+  return {
+    description: doc?.meta?.description,
+    openGraph: mergeOpenGraph({
+      description: doc?.meta?.description || '',
+      images: ogImage
+        ? [
+            {
+              url: ogImage,
+            },
+          ]
+        : undefined,
+      title,
+      url: slug ? `${serverUrl}/${locale}/${slug}` : '/',
     }),
     title,
   };
