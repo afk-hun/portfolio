@@ -2,12 +2,12 @@ import {
   DefaultNodeTypes,
   // SerializedLinkNode,
   type DefaultTypedEditorState,
-} from "@payloadcms/richtext-lexical";
+} from '@payloadcms/richtext-lexical';
 import {
   JSXConvertersFunction,
   // LinkJSXConverter,
   RichText as ConvertRichText,
-} from "@payloadcms/richtext-lexical/react";
+} from '@payloadcms/richtext-lexical/react';
 
 type NodeTypes = DefaultNodeTypes;
 
@@ -34,6 +34,10 @@ type Props = {
 export default function RichText(props: Props) {
   const { ...rest } = props;
   return (
-    <ConvertRichText className="w-full" converters={jsxConverters} {...rest} />
+    <ConvertRichText
+      className='w-full rich-text'
+      converters={jsxConverters}
+      {...rest}
+    />
   );
 }

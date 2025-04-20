@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Poppins, Lexend } from 'next/font/google';
+import { Lexend } from 'next/font/google';
 import '../../globals.css';
 import {
   NavigationBar,
@@ -18,12 +18,6 @@ import { Social } from '@/payload-types';
 import { getCachedGlobal } from '@/utilities/getGlobals';
 import DynamicFavIcon from '@/components/DynamicFavIcon/DynamicFavIcon';
 
-const PoppinsSans = Poppins({
-  subsets: ['latin'],
-  variable: '--font-poppins',
-  display: 'swap',
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
-});
 const LexendSans = Lexend({
   subsets: ['latin'],
   variable: '--font-lexend',
@@ -68,7 +62,7 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <NextIntlClientProvider>
-        <body className={PoppinsSans.className + ' ' + LexendSans.className}>
+        <body className={LexendSans.className}>
           <DynamicFavIcon />
           <div id='myportal' />
           <div className='flex p-4 md:p-14 lg:p-20 justify-center h-auto md:h-[100vh]'>
