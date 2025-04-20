@@ -1,11 +1,11 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Image from "next/image";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Image from 'next/image';
 import {
   faChevronLeft,
   faChevronRight,
   faXmark,
-} from "@fortawesome/free-solid-svg-icons";
-import { Ref } from "react";
+} from '@fortawesome/free-solid-svg-icons';
+import { Ref } from 'react';
 
 interface ImageModalProps {
   ref?: Ref<HTMLDivElement>;
@@ -51,7 +51,7 @@ export function ImageModal({
 	`}
       />
       <button
-        type="button"
+        type='button'
         className={`
 				absolute 
 				top-10 
@@ -74,11 +74,12 @@ export function ImageModal({
 				`}
         onClick={onClose}
       >
-        <FontAwesomeIcon width={"1rem"} height={"1rem"} icon={faXmark} />
+        <FontAwesomeIcon width={'1rem'} height={'1rem'} icon={faXmark} />
       </button>
       <div
+        // absolute
         className={`
-				absolute
+			relative
 				top-0
 				left-0
 				flex
@@ -91,7 +92,7 @@ export function ImageModal({
       >
         {hasMany && (
           <button
-            type="button"
+            type='button'
             className={`
 				absolute 
 				top-1/2 
@@ -115,27 +116,27 @@ export function ImageModal({
             onClick={onLeftClick}
           >
             <FontAwesomeIcon
-              width={"1rem"}
-              height={"1rem"}
+              width={'1rem'}
+              height={'1rem'}
               icon={faChevronLeft}
             />
           </button>
         )}
         <Image
+          style={{
+            objectFit: 'contain',
+            padding: '5rem',
+            transition: 'all 300ms',
+            filter: 'drop-shadow(0 0 1rem rgba(0, 0, 0, 0.7))',
+          }}
           src={src}
           alt={alt}
           fill
-          style={{
-            objectFit: "contain",
-            padding: "5rem",
-            transition: "all 300ms",
-            filter: "drop-shadow(0 0 1rem rgba(0, 0, 0, 0.7))",
-          }}
           priority
         />
         {hasMany && (
           <button
-            type="button"
+            type='button'
             className={`
 				absolute 
 				top-1/2 
@@ -159,8 +160,8 @@ export function ImageModal({
             onClick={onRightClick}
           >
             <FontAwesomeIcon
-              width={"1rem"}
-              height={"1rem"}
+              width={'1rem'}
+              height={'1rem'}
               icon={faChevronRight}
             />
           </button>

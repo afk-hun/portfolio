@@ -17,6 +17,7 @@ type Args = {
 
 export default async function About() {
   const locale = await getLocale();
+
   const payload = await getPayload({ config: configPromise });
 
   const global = await payload.findGlobal({

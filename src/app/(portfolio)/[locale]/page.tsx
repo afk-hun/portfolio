@@ -1,6 +1,5 @@
 import Masonry from '@/components/molecules/MasonryGrid/MasonryGrid';
-import { Media, Portfolio } from '@/payload-types';
-import { getCachedGlobal } from '@/utilities/getGlobals';
+import { Media } from '@/payload-types';
 import { setRequestLocale } from 'next-intl/server';
 import PageClient from './page.client';
 import { Locale } from '@/i18n/routing';
@@ -23,7 +22,14 @@ export default async function Home({
 }) {
   const { locale } = await params;
 
-  const portfolioData = (await getCachedGlobal('portfolio', 1)()) as Portfolio;
+  const payload = await getPayload({ config: configPromise });
+
+  const portfolioData = await payload.findGlobal({
+    slug: 'portfolio',
+    depth: 1,
+    locale: locale as Locale,
+  });
+
   // Enable static rendering
   setRequestLocale(locale);
 

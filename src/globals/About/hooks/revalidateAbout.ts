@@ -1,6 +1,6 @@
-import type { GlobalAfterChangeHook } from "payload";
+import type { GlobalAfterChangeHook } from 'payload';
 
-import { revalidateTag } from "next/cache";
+import { revalidatePath } from 'next/cache';
 
 export const revalidateAbout: GlobalAfterChangeHook = ({
   doc,
@@ -8,8 +8,9 @@ export const revalidateAbout: GlobalAfterChangeHook = ({
 }) => {
   if (!context.disableRevalidate) {
     payload.logger.info(`Revalidating about page...`);
-
-    revalidateTag("global_about");
+    revalidatePath('en/about');
+    revalidatePath('se/about');
+    revalidatePath('hu/about');
   }
 
   return doc;

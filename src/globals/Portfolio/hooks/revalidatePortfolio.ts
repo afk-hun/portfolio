@@ -1,6 +1,6 @@
-import type { GlobalAfterChangeHook } from "payload";
+import type { GlobalAfterChangeHook } from 'payload';
 
-import { revalidateTag } from "next/cache";
+import { revalidatePath } from 'next/cache';
 
 export const revalidatePortfolio: GlobalAfterChangeHook = ({
   doc,
@@ -9,7 +9,9 @@ export const revalidatePortfolio: GlobalAfterChangeHook = ({
   if (!context.disableRevalidate) {
     payload.logger.info(`Revalidating Portfolio page...`);
 
-    revalidateTag("global_portfolio");
+    revalidatePath('/en');
+    revalidatePath('/hu');
+    revalidatePath('/se');
   }
 
   return doc;
