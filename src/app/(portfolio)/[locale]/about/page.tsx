@@ -34,13 +34,17 @@ export default async function About() {
   setRequestLocale(locale);
 
   return (
-    <div className='w-full flex flex-col md:flex-row md:space-between gap-4'>
-      <RichText data={aboutMe} />
+    <>
+      {global.id && (
+        <div className='w-full flex flex-col md:flex-row md:space-between gap-4'>
+          <RichText data={aboutMe} />
 
-      <div className='flex flex-row md:flex-col '>
-        <ProfileImage images={images} />
-      </div>
-    </div>
+          <div className='flex flex-row md:flex-col '>
+            <ProfileImage images={images} />
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 

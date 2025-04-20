@@ -1,6 +1,7 @@
 // import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
-import { seoPlugin } from "@payloadcms/plugin-seo";
-import { Plugin } from "payload";
+import { gcsStorage } from '@payloadcms/storage-gcs';
+import { seoPlugin } from '@payloadcms/plugin-seo';
+import { Plugin } from 'payload';
 // import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
 
 // import { Page, Post } from '@/payload-types'
@@ -20,6 +21,17 @@ export const plugins: Plugin[] = [
   seoPlugin({
     // generateTitle,
     // generateURL,
+  }),
+  gcsStorage({
+    collections: {
+      media: true,
+    },
+    bucket: process.env.GCS_BUCKET || '',
+    options: {
+      // apiEndpoint: process.env.GCS_ENDPOINT,
+      projectId: process.env.GCS_PROJECT_ID,
+      credentials: JSON.parse(process.env.GCP_SERVICE_ACCOUNT || '{}'),
+    },
   }),
 
   // ...(process.env.IS_PRODUCTION === 'true') ? payloadCloudPlugin() : {},

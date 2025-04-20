@@ -23,6 +23,7 @@
     "@payloadcms/next": "^3.28.1",
     "@payloadcms/plugin-seo": "^3.28.1",
     "@payloadcms/richtext-lexical": "^3.28.1",
+    "@payloadcms/storage-gcs": "^3.28.1",
     "graphql": "^16.10.0",
     "next": "15.2.2",
     "next-intl": "^4.0.2",
