@@ -1,0 +1,44 @@
+import React from 'react';
+import ImageWithSkeleton from '@/components/molecules/Image/ImageWithSkeleton';
+import {MasonryGridView} from '@/components/molecules/Masonsry2/MasonryGridView';
+import { Media } from '@/payload-types';
+
+const TestPage = () => {
+    return (
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+            <h1>This is a test page</h1>
+            <ImageWithSkeleton
+                src="https://picsum.photos/id/237/200/300"
+                alt="Placeholder Image"
+                width={200}
+                height={300}
+            />
+
+            <MasonryGridView
+                images={[
+                    { url: 'https://picsum.photos/id/237/200/300', width: 200, height: 300 },
+                    { url: 'https://picsum.photos/id/238/300/200', width: 300, height: 200 },
+
+                    { url: 'https://picsum.photos/id/239/400/400', width: 300, height: 200 },
+                    { url: 'https://picsum.photos/id/240/300/200', width: 200, height: 300 },
+
+                    { url: 'https://picsum.photos/id/241/200/200', width: 300, height: 200 },
+                    { url: 'https://picsum.photos/id/242/500/300', width: 300, height: 200 },
+
+                    { url: 'https://picsum.photos/id/241/200/200', width: 200, height: 300 },
+                    { url: 'https://picsum.photos/id/242/500/300', width: 200, height: 300 },
+
+                    { url: 'https://picsum.photos/id/245/300/600', width: 200, height: 600 },
+
+                    { url: 'https://picsum.photos/id/243/300/500', width: 300, height: 300 },
+                    { url: 'https://picsum.photos/id/244/600/300', width: 300, height: 200 },
+                    
+
+                ] as Media[]}
+            />
+            
+        </div>
+    );
+};
+
+export default TestPage;
