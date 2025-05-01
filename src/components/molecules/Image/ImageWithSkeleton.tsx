@@ -8,6 +8,7 @@ interface ImageWithSkeletonProps {
   alt: string;
   width: number;
   height: number;
+  aspectRatio: string;
 }
 
 export default function ImageWithSkeleton({
@@ -15,6 +16,7 @@ export default function ImageWithSkeleton({
   alt,
   width,
   height,
+  aspectRatio,
 }: ImageWithSkeletonProps) {
   const [loaded, setLoaded] = useState(false);
 
@@ -38,6 +40,7 @@ export default function ImageWithSkeleton({
         alt={alt}
         width={width}
         height={height}
+        style={{width: 'auto', height: 'auto', objectFit: 'contain', aspectRatio}}
         className={
           `transition-opacity duration-500 ${
             loaded ? 'opacity-100' : 'opacity-0'
