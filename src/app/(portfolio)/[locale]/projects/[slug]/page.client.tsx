@@ -2,8 +2,9 @@
 import { ImagesContext } from '@/components/providers/ImageProvider';
 import { ImagesBlock, Media, RichTextBlock } from '@/payload-types';
 import React, { useContext, useEffect } from 'react';
-import Image from 'next/image';
 import { RenderBlocks } from '@/blocks/RenderBlocks';
+import { DisplayContext } from '@/components/providers/DisplayProvider';
+import ImageWithSkeleton from '@/components/molecules/Image/ImageWithSkeleton';
 
 interface PageClientProps {
   mainImage: Media;
@@ -12,6 +13,7 @@ interface PageClientProps {
 
 const PageClient: React.FC<PageClientProps> = ({ mainImage, layout }) => {
   const { setImages, setCurrentImageId } = useContext(ImagesContext);
+  const { display } = useContext(DisplayContext);
 
   useEffect(() => {
     const collectedImages = [mainImage];
@@ -32,21 +34,28 @@ const PageClient: React.FC<PageClientProps> = ({ mainImage, layout }) => {
 
   return (
     <>
-      <Image
-        className='self-center w-full h-auto aspect-[3/1] md:w-[90%] md:h-auto'
-        style={{
-          objectFit: 'cover',
-          objectPosition: 'center',
-          cursor: 'pointer',
-        }}
-        src={mainImage.url || ''}
-        alt={mainImage.alt || ''}
-        width={1000}
-        height={500}
-        onClick={handleMainImageClick}
-      />
-
-      {layout && <RenderBlocks blocks={layout} />}
+      {display !== null && (
+        <>
+          <ImageWithSkeleton
+            className='self-center w-full h-auto aspect-[3/1] md:w-[90%] md:h-auto rounded'
+            style={{
+              objectFit: 'cover',
+              objectPosition: 'center',
+              cursor: display !== 'mobile' ? 'pointer' : 'default',
+            }}
+            src={mainImage.url || ''}
+            alt={mainImage.alt || ''}
+            width={1000}
+            height={500}
+            onClick={() => {
+              if (display !== 'mobile') {
+                handleMainImageClick();
+              }
+            }}
+          />
+          {layout && <RenderBlocks blocks={layout} />}
+        </>
+      )}
     </>
   );
 };

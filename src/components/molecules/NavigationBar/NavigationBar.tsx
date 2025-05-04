@@ -11,13 +11,14 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { LangSelect } from '../LangSelect/LangSelect';
 import AFK_LOGO from '@public/images/afk-logo.svg';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { Link as IntlLink, usePathname, useRouter } from '@/i18n/navigation';
 import { Locale } from '@/i18n/routing';
 import { usePathname as useNextPathName } from 'next/navigation';
 import { faAnglesUp } from '@fortawesome/free-solid-svg-icons';
-import { useDisplaySize } from '@/hooks/display';
+import { DisplayContext } from '@/components/providers/DisplayProvider';
+// import { useDisplaySize } from '@/hooks/display';
 
 export type SocialIconType = 'linkedin' | 'github' | 'youtube' | 'instagram';
 
@@ -51,7 +52,7 @@ export function NavigationBar({ projects, socialMedia }: NavigationBarProps) {
   const pathSegments = path.split('/');
   const page = pathSegments[1];
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const display = useDisplaySize();
+  const { display } = useContext(DisplayContext);
 
   const realPath = useNextPathName();
   const realPathSegments = realPath.split('/');
@@ -128,16 +129,21 @@ export function NavigationBar({ projects, socialMedia }: NavigationBarProps) {
 
   return (
     <>
-      {
+      {display !== null && (
         <nav
-          className={`flex flex-col w-full  md:min-w-[200px] md:w-[200px] gap-4 sticky md:top-14 lg:top-20`}
+          className={`flex flex-col w-full  md:min-w-[150px] md:w-[200px] gap-4 sticky md:top-14 lg:top-20`}
         >
           <div className='flex flex-col gap-4'>
             <div className='w flex justify-between items-center'>
               <IntlLink href={'/'} locale={locale} className='px-1 py-2'>
                 <Image
                   style={{
-                    width: display === 'mobile' ? '80px' : '125px',
+                    width:
+                      display === 'mobile'
+                        ? '80px'
+                        : display === 'tablet'
+                          ? '100px'
+                          : '125px',
                     height: 'auto',
                   }}
                   src={AFK_LOGO.src}
@@ -247,7 +253,7 @@ export function NavigationBar({ projects, socialMedia }: NavigationBarProps) {
             </div>
           </div>
         </nav>
-      }
+      )}
     </>
   );
 }
