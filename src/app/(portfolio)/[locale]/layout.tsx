@@ -17,6 +17,7 @@ import { ImagesProvider } from '@/components/providers/ImageProvider';
 import { Social } from '@/payload-types';
 import { getCachedGlobal } from '@/utilities/getGlobals';
 import DynamicFavIcon from '@/components/DynamicFavIcon/DynamicFavIcon';
+import { DisplayProvider } from '@/components/providers/DisplayProvider';
 
 const LexendSans = Lexend({
   subsets: ['latin'],
@@ -61,20 +62,25 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <NextIntlClientProvider>
-        <body className={LexendSans.className}>
-          <DynamicFavIcon />
-          <div id='myportal' />
-          <div className='flex p-4 md:p-14 lg:p-20 justify-center h-auto md:h-[100vh]'>
-            <div className='flex flex-col h-full md:flex-row gap-4 w-full max-w-[1200px]'>
-              <ImagesProvider>
-                <NavigationBar projects={projects} socialMedia={socialMedia} />
-                <div className='overflow-y-scroll'>{children}</div>
-              </ImagesProvider>
+      <DisplayProvider>
+        <NextIntlClientProvider>
+          <body className={LexendSans.className}>
+            <DynamicFavIcon />
+            <div id='myportal' />
+            <div className='flex p-4 md:p-14 lg:p-20 justify-center h-auto md:h-[100vh]'>
+              <div className='flex flex-col h-full md:flex-row gap-4 w-full max-w-[1200px]'>
+                <ImagesProvider>
+                  <NavigationBar
+                    projects={projects}
+                    socialMedia={socialMedia}
+                  />
+                  <div className='w-full overflow-y-scroll'>{children}</div>
+                </ImagesProvider>
+              </div>
             </div>
-          </div>
-        </body>
-      </NextIntlClientProvider>
+          </body>
+        </NextIntlClientProvider>
+      </DisplayProvider>
     </html>
   );
 }
