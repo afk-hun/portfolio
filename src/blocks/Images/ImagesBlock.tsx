@@ -1,6 +1,6 @@
 import React from 'react';
 import type { ImagesBlock as ImagesBlockProps, Media } from '@/payload-types';
-import Masonry from '@/components/molecules/MasonryGrid/MasonryGrid';
+import ImageGrid from '@/components/molecules/MasonsryGrid/MasonryGrid';
 
 export const ImagesBlock: React.FC<ImagesBlockProps> = ({ images }) => {
   const pictures = images.map((image) => {
@@ -9,7 +9,7 @@ export const ImagesBlock: React.FC<ImagesBlockProps> = ({ images }) => {
 
   return (
     <div className=''>
-      <Masonry images={pictures} />
+      <ImageGrid images={pictures} />
     </div>
   );
 };
