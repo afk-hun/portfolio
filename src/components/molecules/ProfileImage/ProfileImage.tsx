@@ -2,6 +2,7 @@
 import { Media } from '@/payload-types';
 import Image from 'next/image';
 import { useState } from 'react';
+import ImageWithSkeleton from '../Image/ImageWithSkeleton';
 
 const TRANSITION_DURATION = 300;
 
@@ -23,18 +24,20 @@ export const ProfileImage: React.FC<ProfileImageProps> = ({ images }) => {
       }}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <Image
+      <ImageWithSkeleton
         style={{
           width: '100%',
           height: 'auto',
           aspectRatio: '2/3',
           objectFit: 'cover',
+          minWidth: '250px',
         }}
         src={main.url || ''}
         alt={main.alt || 'Image description not available'}
         width={300}
         height={200}
       />
+
       <div
         className={`absolute top-0 left-0 right-0 bottom-0 
           ${isHovered ? 'opacity-100' : 'opacity-0'} 
@@ -42,6 +45,7 @@ export const ProfileImage: React.FC<ProfileImageProps> = ({ images }) => {
       >
         {others.length !== 0 && (
           <Image
+            className='rounded'
             style={{
               width: '100%',
               height: 'auto',
