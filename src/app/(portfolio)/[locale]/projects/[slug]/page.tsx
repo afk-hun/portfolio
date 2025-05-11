@@ -93,7 +93,7 @@ export async function generateMetadata({
     locale,
   });
 
-  return generateMeta({ doc: page });
+  return generateMeta({ doc: page, locale: locale });
   // return {};
 }
 

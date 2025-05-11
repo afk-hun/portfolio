@@ -15,7 +15,7 @@ import { Locale } from 'next-intl';
 const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
   const serverUrl = getServerSideURL();
 
-  let url = serverUrl + 'images/AFK-default-SEO-image.webp';
+  let url = '/images/AFK-default-SEO-image.webp';
 
   if (image && typeof image === 'object' && 'url' in image) {
     const ogUrl = image.sizes?.og?.url;
@@ -28,10 +28,12 @@ const getImageURL = (image?: Media | Config['db']['defaultIDType'] | null) => {
 
 export const generateMeta = async (args: {
   doc: Partial<Project> | null;
+  locale: Locale;
 }): Promise<Metadata> => {
-  const { doc } = args;
+  const { doc, locale } = args;
 
   const ogImage = getImageURL(doc?.meta?.image);
+  const serverUrl = getServerSideURL();
 
   const title = doc?.meta?.title ? doc?.meta?.title : 'AFK Portfolio Site';
 
@@ -47,7 +49,9 @@ export const generateMeta = async (args: {
           ]
         : undefined,
       title,
-      url: Array.isArray(doc?.slug) ? doc?.slug.join('/') : '/',
+      url: doc?.slug
+        ? `${serverUrl}/${locale}/projects/${doc.slug}`
+        : `${serverUrl}/${locale}`,
     }),
     title,
   };
@@ -76,7 +80,10 @@ export const generateMetaForGlobal = async (args: {
           ]
         : undefined,
       title,
-      url: slug ? `${serverUrl}/${locale}/${slug}` : '/',
+      url:
+        slug !== '/'
+          ? `${serverUrl}/${locale}/${slug}`
+          : `${serverUrl}/${locale}`,
     }),
     title,
   };
