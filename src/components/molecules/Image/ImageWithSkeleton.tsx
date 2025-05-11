@@ -34,6 +34,7 @@ export default function ImageWithSkeleton({
           `transition-opacity duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}` +
           (className ? ` ${className}` : '')
         }
+        priority
       />
     </div>
   );
