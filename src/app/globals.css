@@ -9,6 +9,16 @@
   --color-foreground: var(--foreground);
   --color-color-primary: var(--text-primary);
   --color-color-secondary: var(--text-secondary);
+
+  --color-dragon-ball: var(--dragon-ball-bg);
+  --color-dragon-ball-border: var(--dragon-ball-border);
+  --color-dragon-ball-primary: var(--dragon-ball-primary);
+  --color-dragon-ball-secondary: var(--dragon-ball-secondary);
+
+  --breakpoint-xs: 480px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
 }
 
 :root {
@@ -16,6 +26,11 @@
   --border: #fff1c1;
   --text-primary: #4780ff;
   --text-secondary: #808b97;
+
+  --dragon-ball-bg: #f4f4f4;
+  --dragon-ball-border: #ffd300;
+  --dragon-ball-primary: #ff7800;
+  --dragon-ball-secondary: #2e4b9c;
 }
 
 /* ? this is not important because I handle only two mode */
@@ -31,8 +46,26 @@
   --border: #393e46;
   --text-primary: #ffd369;
   --text-secondary: #eeeeee;
+
+  --dragon-ball-bg: #0d0d0d;
+  --dragon-ball-border: #ffdd55;
+  --dragon-ball-primary: #ff9b26;
+  --dragon-ball-secondary: #4466c9;
 }
 
+/* :root .dragon-ball {
+  --background: #f4f4f4;
+  --border: #ffd300;
+  --text-primary: #ff7800;
+  --text-secondary: #2e4b9c;
+} */
+
+/* .dark .dragon-ball {
+  --background: #0d0d0d;
+  --border: #ffdd55;
+  --text-primary: #ff9b26;
+  --text-secondary: #4466c9;
+} */
 * {
   @apply transition-colors duration-300;
 }
