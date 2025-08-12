@@ -3,10 +3,11 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import ThemeToggle from './ThemeToggle';
-import useDarkMode from '@/hooks/useDarkMode';
+import { useContext } from 'react';
+import { ThemeContext } from '@/context/ThemeContext';
 
 export default function Header() {
-  const { theme } = useDarkMode();
+  const { theme } = useContext(ThemeContext);
   const isDark = theme === 'dark';
 
   return (
@@ -36,8 +37,11 @@ export default function Header() {
           target='_blank'
           rel='noopener noreferrer'
           className={`flex items-center justify-center 
+			box-border
 			rounded-4xl 
-			bg-secondary/50 p-2
+			bg-secondary/50 
+			h-10
+			w-10
 			${!isDark ? 'border-1 border-color-primary' : 'border-none'}`}
         >
           <svg

@@ -1,6 +1,20 @@
-import { useEffect, useState } from 'react';
+'use client';
+import { createContext, useEffect, useState } from 'react';
 
-export default function useDarkMode() {
+type ThemeContextType = {
+  theme: 'light' | 'dark';
+  toggleTheme: () => void;
+};
+
+export const ThemeContext = createContext<ThemeContextType>(
+  {} as ThemeContextType
+);
+
+export default function ThemeProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
   useEffect(() => {
@@ -31,5 +45,9 @@ export default function useDarkMode() {
     setTheme(newTheme);
   };
 
-  return { theme, toggleTheme };
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
 }
