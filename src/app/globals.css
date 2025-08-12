@@ -7,6 +7,7 @@
 @theme {
   --color-main: var(--background);
   --color-foreground: var(--foreground);
+  --color-secondary: var(--border);
   --color-color-primary: var(--text-primary);
   --color-color-secondary: var(--text-secondary);
 
@@ -53,19 +54,6 @@
   --dragon-ball-secondary: #4466c9;
 }
 
-/* :root .dragon-ball {
-  --background: #f4f4f4;
-  --border: #ffd300;
-  --text-primary: #ff7800;
-  --text-secondary: #2e4b9c;
-} */
-
-/* .dark .dragon-ball {
-  --background: #0d0d0d;
-  --border: #ffdd55;
-  --text-primary: #ff9b26;
-  --text-secondary: #4466c9;
-} */
 * {
   @apply transition-colors duration-300;
 }

@@ -1,0 +1,46 @@
+:root {
+  --left-start: 0.25rem;
+  --left-end: 2.75rem;
+}
+
+@keyframes slideToRight {
+  0% {
+    left: var(--left-start);
+  }
+  100% {
+    left: var(--left-end);
+  }
+}
+
+@keyframes slideToLeft {
+  0% {
+    left: var(--left-end);
+  }
+  100% {
+    left: var(--left-start);
+  }
+}
+
+.animate-to-right {
+  animation: slideToRight 300ms cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+}
+
+.animate-to-left {
+  animation: slideToLeft 300ms cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+}
+
+/* Icon fade animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.icon-fade-in {
+  animation: fadeIn 300ms ease-in-out forwards;
+}
